@@ -1,55 +1,82 @@
-import { Form, Input, Button, Checkbox } from 'antd';
-import { SignInWrapper } from './styled';
+import { Form, Input, Button, Checkbox } from "antd";
+import { UserOutlined, LockOutlined } from "@ant-design/icons";
+import styled from "styled-components";
+
+import { SignInWrapper } from "./styled";
+
+const LoginButtonWrapper = styled(Form.Item)`
+  display: flex;
+  flex-direction: column;
+`;
 
 export const SignIn = () => {
   const onFinish = (values: any) => {
-    console.log('Success:', values);
+    console.log("Success:", values);
   };
 
   const onFinishFailed = (errorInfo: any) => {
-    console.log('Failed:', errorInfo);
+    console.log("Failed:", errorInfo);
   };
 
   return (
     <SignInWrapper>
       <Form
-        name="basic"
-        labelCol={{ span: 8 }}
-        wrapperCol={{ span: 16 }}
-        initialValues={{ remember: true }}
+        name="normal_login"
+        className="login-form"
+        initialValues={{
+          remember: true
+        }}
         onFinish={onFinish}
-        onFinishFailed={onFinishFailed}
-        autoComplete="off"
       >
         <Form.Item
-          label="Username"
           name="username"
-          rules={[{ required: true, message: 'Please input your username!' }]}
+          rules={[
+            {
+              required: true,
+              message: "Please input your Username!"
+            }
+          ]}
         >
-          <Input />
+          <Input
+            prefix={<UserOutlined className="site-form-item-icon" />}
+            placeholder="Username"
+          />
         </Form.Item>
-
         <Form.Item
-          label="Password"
           name="password"
-          rules={[{ required: true, message: 'Please input your password!' }]}
+          rules={[
+            {
+              required: true,
+              message: "Please input your Password!"
+            }
+          ]}
         >
-          <Input.Password />
+          <Input
+            prefix={<LockOutlined className="site-form-item-icon" />}
+            type="password"
+            placeholder="Password"
+          />
         </Form.Item>
+        <Form.Item>
+          <Form.Item name="remember" valuePropName="checked" noStyle>
+            <Checkbox>Remember me</Checkbox>
+          </Form.Item>
 
-        <Form.Item
-          name="remember"
-          valuePropName="checked"
-          wrapperCol={{ offset: 8, span: 16 }}
-        >
-          <Checkbox>Remember me</Checkbox>
+          <a className="login-form-forgot" href="">
+            Forgot password
+          </a>
         </Form.Item>
-
-        <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-          <Button type="primary" htmlType="submit">
-            Submit
+        <LoginButtonWrapper>
+          <Button
+            block
+            type="primary"
+            htmlType="submit"
+            className="login-form-button"
+          >
+            Log in
           </Button>
-        </Form.Item>
+          Or <a href="/signup">register now!</a>
+        </LoginButtonWrapper>
       </Form>
     </SignInWrapper>
   );
