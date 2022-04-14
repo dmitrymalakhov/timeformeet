@@ -1,6 +1,8 @@
+import { useState } from "react";
 import { Form, Input, Button, Checkbox } from "antd";
-import { UserOutlined, LockOutlined } from "@ant-design/icons";
+import { Navigate } from "react-router-dom";
 import styled from "styled-components";
+import { UserOutlined, LockOutlined } from "@ant-design/icons";
 
 import { SignInWrapper } from "./styled";
 
@@ -10,12 +12,18 @@ const LoginButtonWrapper = styled(Form.Item)`
 `;
 
 export const SignIn = () => {
-  const onFinish = (values: any) => {
-    console.log("Success:", values);
-  };
+  const [loggedIn, setLoggedIn] = useState<boolean>(false);
+  console.log(loggedIn);
 
-  const onFinishFailed = (errorInfo: any) => {
-    console.log("Failed:", errorInfo);
+  const onFinish = (values: any) => {
+    fetch("https://rbuobh.sse.codesandbox.io/signin", {
+      method: "POST",
+      body: JSON.stringify(values)
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        setLoggedIn(!!res);
+      });
   };
 
   return (
@@ -29,17 +37,17 @@ export const SignIn = () => {
         onFinish={onFinish}
       >
         <Form.Item
-          name="username"
+          name="login"
           rules={[
             {
               required: true,
-              message: "Please input your Username!"
+              message: "Please input your Login!"
             }
           ]}
         >
           <Input
             prefix={<UserOutlined className="site-form-item-icon" />}
-            placeholder="Username"
+            placeholder="Login"
           />
         </Form.Item>
         <Form.Item
@@ -78,6 +86,7 @@ export const SignIn = () => {
           Or <a href="/signup">register now!</a>
         </LoginButtonWrapper>
       </Form>
+      {loggedIn && <Navigate replace to="/calendar" />}
     </SignInWrapper>
   );
 };

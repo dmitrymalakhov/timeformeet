@@ -28,47 +28,28 @@ const tailFormItemLayout = {
   }
 };
 
+interface ISignUpForm {
+  email: string;
+  name: string;
+  password: string;
+  confirm: string;
+  nickname: string;
+  company: string;
+  phone: string;
+  intro: string;
+}
+
 export const SignUp = () => {
   const [form] = Form.useForm();
 
-  const onFinish = (values: any) => {
-    console.log("Received values of form: ", values);
+  const onFinish = (value: ISignUpForm) => {
+    fetch("https://rbuobh.sse.codesandbox.io/signup", {
+      method: "POST",
+      body: JSON.stringify(value)
+    })
+      .then((res) => res.json())
+      .then((res) => console.log(res));
   };
-
-  const prefixSelector = (
-    <Form.Item name="prefix" noStyle>
-      <Select style={{ width: 70 }}>
-        <Option value="86">+86</Option>
-        <Option value="87">+87</Option>
-      </Select>
-    </Form.Item>
-  );
-
-  const suffixSelector = (
-    <Form.Item name="suffix" noStyle>
-      <Select style={{ width: 70 }}>
-        <Option value="USD">$</Option>
-        <Option value="CNY">¥</Option>
-      </Select>
-    </Form.Item>
-  );
-
-  const [autoCompleteResult, setAutoCompleteResult] = useState<string[]>([]);
-
-  const onWebsiteChange = (value: string) => {
-    if (!value) {
-      setAutoCompleteResult([]);
-    } else {
-      setAutoCompleteResult(
-        [".com", ".org", ".net"].map((domain) => `${value}${domain}`)
-      );
-    }
-  };
-
-  const websiteOptions = autoCompleteResult.map((website) => ({
-    label: website,
-    value: website
-  }));
 
   return (
     <SignUpWrapper>
@@ -80,7 +61,7 @@ export const SignUp = () => {
         scrollToFirstError
       >
         <Form.Item
-          name="email"
+          name="login"
           label="E-mail"
           rules={[
             {
@@ -136,8 +117,8 @@ export const SignUp = () => {
         </Form.Item>
 
         <Form.Item
-          name="nickname"
-          label="Nickname"
+          name="name"
+          label="Name"
           tooltip="What do you want others to call you?"
           rules={[
             {
