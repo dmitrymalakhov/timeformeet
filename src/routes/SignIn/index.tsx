@@ -111,7 +111,7 @@ export const SignIn = () => {
           )}
         </Form>
 
-        {loggedIn && <Navigate replace to="/calendar" />}
+        {/* {loggedIn && <Navigate replace to="/calendar" />} */}
       </SignInWrapper>
     </>
   );
