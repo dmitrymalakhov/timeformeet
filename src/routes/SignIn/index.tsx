@@ -32,7 +32,10 @@ interface RefreshTokenResponse extends Response {
 
 const verifyAuthentication = async (token: string) => {
   try {
-    const res: RefreshTokenResponse = await fetch(`${baseAPILink}/refresh`);
+    const res: RefreshTokenResponse = await fetch(`${baseAPILink}/refresh`, {
+      credentials: "include"
+    });
+
     console.log(res);
     if (res.accessToken) localStorage.setItem("token", res.accessToken);
   } catch (e) {
@@ -62,7 +65,8 @@ export const SignIn = () => {
   const handleFinish = (values: any) => {
     fetch(`${baseAPILink}/signin`, {
       method: "POST",
-      body: JSON.stringify(values)
+      body: JSON.stringify(values),
+      credentials: "include"
     })
       .then((res) => res.json())
       .then((res: SignInResponce) => {
