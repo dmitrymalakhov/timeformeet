@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Form, Input, Button, Checkbox, Alert } from "antd";
 import { Navigate } from "react-router-dom";
 import styled from "styled-components";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 
+import { baseAPILink } from "../../constants";
 import { SignInWrapper } from "./styled";
 
 const LoginButtonWrapper = styled(Form.Item)`
@@ -11,30 +12,64 @@ const LoginButtonWrapper = styled(Form.Item)`
   flex-direction: column;
 `;
 
-interface SignInResponce {
-  statusCode: number;
-  error: string;
-  message: string;
+type TUser = {
+  id: number;
+  login: string;
+};
+
+interface SignInResponce extends Response {
+  accessToken?: string;
+  refreshToken?: string;
+  user?: TUser;
+  statusCode?: number;
+  error?: string;
+  message?: string;
 }
+
+interface RefreshTokenResponse extends Response {
+  accessToken?: string;
+}
+
+const verifyAuthentication = async (token: string) => {
+  try {
+    const res: RefreshTokenResponse = await fetch(`${baseAPILink}/refresh`);
+    console.log(res);
+    if (res.accessToken) localStorage.setItem("token", res.accessToken);
+  } catch (e) {
+    console.log(e);
+  }
+};
 
 export const SignIn = () => {
   const [loggedIn, setLoggedIn] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+  const [runRefreshToken, setRunRefreshToken] = useState<number>(0);
 
   const handleCloseError = () => {
     setError(null);
   };
 
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) verifyAuthentication(token);
+  }, [runRefreshToken]);
+
+  const handleRefreshToken = () => {
+    console.log(Math.random());
+    setRunRefreshToken(Math.random());
+  };
+
   const handleFinish = (values: any) => {
-    fetch("https://rbuobh.sse.codesandbox.io/signin", {
+    fetch(`${baseAPILink}/signin`, {
       method: "POST",
       body: JSON.stringify(values)
     })
       .then((res) => res.json())
       .then((res: SignInResponce) => {
-        if (res.statusCode && res.statusCode !== 200) {
+        if (res.message && res.statusCode && res.statusCode !== 200) {
           setError(res.message);
-        } else {
+        } else if (res.accessToken) {
+          localStorage.setItem("token", res.accessToken);
           setLoggedIn(!!res);
         }
       })
@@ -101,6 +136,7 @@ export const SignIn = () => {
             </Button>
             Or <a href="/signup">register now!</a>
           </LoginButtonWrapper>
+          <Button onClick={handleRefreshToken}>Refresh token</Button>
           {error && (
             <Alert
               description={error}
