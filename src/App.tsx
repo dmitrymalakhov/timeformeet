@@ -1,9 +1,9 @@
 import styled from "styled-components";
 import { Routes, Route } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "react-query";
-import { SignIn } from "./routes/SignIn";
-import { SignUp } from "./routes/SignUp";
-import { Calendar } from "./routes/Calendar";
+import { ReactQueryDevtools } from "react-query/devtools";
+import { SignIn, SignUp, Calendar, Root } from "./routes";
+
 import "antd/dist/antd.css";
 
 const AppWrapper = styled.div``;
@@ -14,10 +14,14 @@ export const App = () => (
   <QueryClientProvider client={queryClient}>
     <AppWrapper>
       <Routes>
-        <Route path="/" element={<SignIn />} />
+        <Route path="/signin" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
-        <Route path="/calendar" element={<Calendar />} />
+
+        <Route path="/" element={<Root />}>
+          <Route path="/calendar" element={<Calendar />} />
+        </Route>
       </Routes>
     </AppWrapper>
+    <ReactQueryDevtools initialIsOpen={false} />
   </QueryClientProvider>
 );

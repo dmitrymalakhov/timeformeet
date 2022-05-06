@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
 import { Form, Input, Button, Checkbox, Alert } from "antd";
+import { useQueryClient, QueryObserver } from "react-query";
 import { Navigate } from "react-router-dom";
 import styled from "styled-components";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 
 import { baseAPILink } from "../../constants";
+import { apiRequest } from "../../utils/request";
 import { SignInWrapper } from "./styled";
 
 const LoginButtonWrapper = styled(Form.Item)`
@@ -26,40 +28,18 @@ interface SignInResponce extends Response {
   message?: string;
 }
 
-interface RefreshTokenResponse extends Response {
-  accessToken?: string;
-}
-
-const verifyAuthentication = async (token: string) => {
-  try {
-    const res: RefreshTokenResponse = await fetch(`${baseAPILink}/refresh`, {
-      credentials: "include"
-    });
-
-    console.log(res);
-    if (res.accessToken) localStorage.setItem("token", res.accessToken);
-  } catch (e) {
-    console.log(e);
-  }
-};
-
 export const SignIn = () => {
   const [loggedIn, setLoggedIn] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
-  const [runRefreshToken, setRunRefreshToken] = useState<number>(0);
+
+  const queryClient = useQueryClient();
 
   const handleCloseError = () => {
     setError(null);
   };
 
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) verifyAuthentication(token);
-  }, [runRefreshToken]);
-
-  const handleRefreshToken = () => {
-    console.log(Math.random());
-    setRunRefreshToken(Math.random());
+  const handleTestRequest = () => {
+    apiRequest("/test");
   };
 
   const handleFinish = (values: any) => {
@@ -140,7 +120,7 @@ export const SignIn = () => {
             </Button>
             Or <a href="/signup">register now!</a>
           </LoginButtonWrapper>
-          <Button onClick={handleRefreshToken}>Refresh token</Button>
+
           {error && (
             <Alert
               description={error}
@@ -149,9 +129,9 @@ export const SignIn = () => {
               onClose={handleCloseError}
             />
           )}
+          <Button onClick={handleTestRequest}>Test Request</Button>
         </Form>
-
-        {/* {loggedIn && <Navigate replace to="/calendar" />} */}
+        {loggedIn && <Navigate replace to="/calendar" />}
       </SignInWrapper>
     </>
   );
