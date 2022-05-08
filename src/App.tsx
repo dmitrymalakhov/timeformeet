@@ -18,7 +18,7 @@ export const App = () => (
         <Route path="/signup" element={<SignUp />} />
 
         <Route path="/" element={<Root />}>
-          <Route path="/calendar" element={<Calendar />} />
+          <Route path="calendar" element={<Calendar />} />
         </Route>
       </Routes>
     </AppWrapper>
