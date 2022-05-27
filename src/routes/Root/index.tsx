@@ -1,12 +1,9 @@
 import React from "react";
-import { useQuery } from "react-query";
 import { Outlet } from "react-router-dom";
-import { getUser } from "../../api/";
+import { useGetUsers } from "../../hooks/useGetUser";
 
 export const Root: React.FC = ({ children }) => {
-  const { data, error } = useQuery("user", getUser, {
-    cacheTime: 60 * 60 * 1000
-  });
+  const { data } = useGetUsers();
 
   return (
     <div>
