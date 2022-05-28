@@ -16,6 +16,17 @@ import "antd/dist/antd.css";
 const GlobalStyle = createGlobalStyle`
   body {
     background-color: #fafafa;
+    font-family: proxima nova,sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    color: #1A1A1A;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a:-webkit-any-link {
+    cursor: pointer;
   }
 `;
 const queryClient = new QueryClient();

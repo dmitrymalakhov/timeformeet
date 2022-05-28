@@ -3,4 +3,4 @@ export { SignUp } from "./SignUp";
 export { Calendar } from "./Calendar";
 export { Root } from "./Root";
 export { BookingPage } from "./BookingPage";
-export { BookingPageEvent } from "./BookingPage/BookingPageEvent";
+export { BookingPageEvent } from "./BookingPageEvent";

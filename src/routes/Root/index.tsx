@@ -1,9 +1,9 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
-import { useGetUsers } from "../../hooks/useGetUser";
+import { useGetUser } from "../../hooks";
 
 export const Root: React.FC = ({ children }) => {
-  const { data } = useGetUsers();
+  const { data } = useGetUser();
 
   return (
     <div>

@@ -2,7 +2,7 @@ import { useQuery } from "react-query";
 import { IUser } from "../types";
 import { getUser } from "../api";
 
-export const useGetUsers = (): {
+export const useGetUser = (): {
   data: IUser;
   isLoading: boolean;
   isError: boolean;

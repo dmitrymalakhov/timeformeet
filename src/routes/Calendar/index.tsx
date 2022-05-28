@@ -1,8 +1,5 @@
 import React from "react";
-import { useQuery } from "react-query";
-import { useGetUsers } from "../../hooks/useGetUser";
-import { IEventType } from "../../types";
-import { getEventTypes, getEventSchedules } from "../../api";
+import { useGetUser, useGetEventTypes } from "../../hooks";
 
 import {
   EventTypeCard,
@@ -17,9 +14,8 @@ import {
 } from "./styled";
 
 export const Calendar: React.FC | null = () => {
-  const user = useGetUsers();
-
-  const eventTypes = useQuery<IEventType[]>("event-types", getEventTypes);
+  const user = useGetUser();
+  const eventTypes = useGetEventTypes();
   // const eventSchedules = useQuery("event-schedules", getEventSchedules);
 
   const renderCards = () => {
