@@ -38,9 +38,8 @@ export const App = () => (
       <Route path="/signin" element={<SignIn />} />
       <Route path="/signup" element={<SignUp />} />
 
-      <Route path="/booking-page/:owner/" element={<BookingPage />}>
-        <Route path=":link" element={<BookingPageEvent />} />
-      </Route>
+      <Route path="/booking-page/:owner/" element={<BookingPage />} />
+      <Route path="/booking-page/:owner/:link" element={<BookingPageEvent />} />
 
       <Route path="/" element={<Root />}>
         <Route path="calendar" element={<Calendar />} />
