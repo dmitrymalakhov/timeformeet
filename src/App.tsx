@@ -1,7 +1,7 @@
-import { createGlobalStyle } from "styled-components";
-import { Routes, Route } from "react-router-dom";
-import { QueryClient, QueryClientProvider } from "react-query";
-import { ReactQueryDevtools } from "react-query/devtools";
+import { createGlobalStyle } from 'styled-components';
+import { Routes, Route } from 'react-router-dom';
+import { QueryClient, QueryClientProvider } from 'react-query';
+import { ReactQueryDevtools } from 'react-query/devtools';
 import {
   SignIn,
   SignUp,
@@ -9,9 +9,9 @@ import {
   BookingPage,
   Root,
   BookingPageEvent
-} from "./routes";
+} from './routes';
 
-import "antd/dist/antd.css";
+import 'antd/dist/antd.css';
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -38,8 +38,11 @@ export const App = () => (
       <Route path="/signin" element={<SignIn />} />
       <Route path="/signup" element={<SignUp />} />
 
-      <Route path="/booking-page/:owner/" element={<BookingPage />} />
-      <Route path="/booking-page/:owner/:link" element={<BookingPageEvent />} />
+      <Route path="/booking-page/:eventTypeId/" element={<BookingPage />} />
+      <Route
+        path="/booking-page/:eventTypeId/:link"
+        element={<BookingPageEvent />}
+      />
 
       <Route path="/" element={<Root />}>
         <Route path="calendar" element={<Calendar />} />

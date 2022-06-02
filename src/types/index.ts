@@ -20,3 +20,23 @@ export interface IEventType {
   createdAt: Date;
   updatedAt: Date;
 }
+
+enum Days {
+  Monday = "monday",
+  Tuesday = "tuesday",
+  Wednesday = "wednesday",
+  Thursday = "thursday",
+  Friday = "friday",
+  Saturday = "saturday",
+  Sunday = "sunday"
+}
+
+export interface IEventSchedules {
+  id: number;
+  event_type_id: number;
+  day: Days;
+  start_time: Date;
+  end_time: Date;
+  createdAt: Date;
+  updatedAt: Date;
+}

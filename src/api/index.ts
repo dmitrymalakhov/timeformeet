@@ -1,4 +1,5 @@
 import { apiRequest } from "../utils/request";
+import { IEventSchedules } from "../types";
 
 export const getUser = () =>
   apiRequest("/user").then((res: Response) => res.json());
@@ -6,5 +7,5 @@ export const getUser = () =>
 export const getEventTypes = () =>
   apiRequest("/events/types").then((res: Response) => res.json());
 
-export const getEventSchedules = () =>
+export const getEventSchedules = (): IEventSchedules[] =>
   apiRequest("/events/schedules").then((res: Response) => res.json());
