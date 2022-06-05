@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 interface IDayAvailableForSelectProps {
   active: boolean;
@@ -24,8 +24,12 @@ export const DayAvailableForSelect = styled.span<IDayAvailableForSelectProps>`
   outline-color: #5593ff;
   outline-offset: 4px;
 
-  &:hover {
-    color: #0060d4;
-    background-color: rgba(0, 105, 255, 0.15);
-  }
+  ${(props) =>
+    !props.active &&
+    css`
+      &:hover {
+        color: #0060d4;
+        background-color: rgba(0, 105, 255, 0.15);
+      }
+    `}
 `;

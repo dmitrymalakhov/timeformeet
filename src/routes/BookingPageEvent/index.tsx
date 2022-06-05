@@ -7,7 +7,7 @@ import { useGetEventSchedules } from '../../hooks';
 
 export const BookingPageEvent: React.FC | null = () => {
   const { eventTypeId, link } = useParams<Record<string, string | undefined>>();
-  const [selectedDate, setSelectedDate] = useState<Moment | null>(null);
+  const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const eventSchedules = useGetEventSchedules(); // TODO: need add eventTypeId to request
 
   const renderCell = (date: Moment) => {
@@ -21,11 +21,11 @@ export const BookingPageEvent: React.FC | null = () => {
       );
 
       if (setAvailableSelect) {
-        const handleClickSelect = () => setSelectedDate(date);
+        const handleClickSelect = () => setSelectedDate(date.format());
 
         return (
           <DayAvailableForSelect
-            active={selectedDate === date}
+            active={selectedDate === date.format()}
             onClick={handleClickSelect}
           >
             {date.date()}
