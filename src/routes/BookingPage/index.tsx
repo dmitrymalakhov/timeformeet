@@ -1,8 +1,6 @@
-import React from "react";
-import { useParams } from "react-router-dom";
-import styled from "styled-components";
-import { useGetEventTypes } from "../../hooks";
-import { TEventTypeMarkerProps } from "./types";
+import React from 'react';
+import { useGetEventTypes } from '../../hooks';
+
 import {
   BookingPageWrapper,
   BookingContainer,
@@ -13,10 +11,9 @@ import {
   EventTypeHeaderTitle,
   EventTypeArrow,
   EventTypeDescription
-} from "./styled";
+} from './styled';
 
 export const BookingPage: React.FC | null = () => {
-  const { owner } = useParams();
   const eventTypes = useGetEventTypes();
 
   const renderItems = () => {

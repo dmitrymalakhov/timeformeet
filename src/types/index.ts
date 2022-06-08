@@ -22,13 +22,18 @@ export interface IEventType {
 }
 
 enum Days {
-  Monday = "monday",
-  Tuesday = "tuesday",
-  Wednesday = "wednesday",
-  Thursday = "thursday",
-  Friday = "friday",
-  Saturday = "saturday",
-  Sunday = "sunday"
+  Monday = 'monday',
+  Tuesday = 'tuesday',
+  Wednesday = 'wednesday',
+  Thursday = 'thursday',
+  Friday = 'friday',
+  Saturday = 'saturday',
+  Sunday = 'sunday'
+}
+
+export enum ScheduleType {
+  Everyday = 'everyday',
+  Single = 'single'
 }
 
 export interface IEventSchedules {
@@ -37,6 +42,7 @@ export interface IEventSchedules {
   day: Days;
   start_time: Date;
   end_time: Date;
+  schedule_type: string;
   createdAt: Date;
   updatedAt: Date;
 }
