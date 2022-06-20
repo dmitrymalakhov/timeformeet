@@ -3,13 +3,49 @@ import { useParams } from 'react-router-dom';
 import { Calendar } from 'antd';
 import moment from 'moment';
 import type { Moment } from 'moment';
-import { DayAvailableForSelect } from './styled';
+import { Box } from '../../components';
+import {
+  DayAvailableForSelect,
+  TimeScheduleButton,
+  ConfirmButton
+} from './styled';
 import { useGetEventSchedules } from '../../hooks';
 import { ScheduleType } from '../../types';
+
+type TimeScheduleProps = {
+  id: number;
+  startTime: Date;
+  endTime?: Date;
+  active: boolean;
+  onClick: (id: number) => void;
+};
+
+const TimeSchedule = ({
+  id,
+  startTime,
+  endTime,
+  onClick,
+  active
+}: TimeScheduleProps) => {
+  const handleClick = () => {
+    onClick(id);
+  };
+
+  return (
+    <Box overflow="hidden" display="flex">
+      <TimeScheduleButton key={id} active={active} onClick={handleClick}>
+        <div>{`${moment(startTime, 'hh:mm:ss').format('HH:mm')}`}</div>
+      </TimeScheduleButton>
+
+      <ConfirmButton active={active}>Confirm</ConfirmButton>
+    </Box>
+  );
+};
 
 export const BookingPageEvent: React.FC | null = () => {
   const { eventTypeId, link } = useParams<Record<string, string | undefined>>();
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
+  const [activeTimeSchedule, setActiveTimeSchedule] = useState<number>(-1);
   const eventSchedules = useGetEventSchedules(); // TODO: need add eventTypeId to request
 
   const schedules =
@@ -31,7 +67,10 @@ export const BookingPageEvent: React.FC | null = () => {
     });
 
     if (setAvailableSelect) {
-      const handleClickSelect = () => setSelectedDate(date.format());
+      const handleClickSelect = () => {
+        setSelectedDate(date.format());
+        setActiveTimeSchedule(-1);
+      };
 
       return (
         <DayAvailableForSelect
@@ -54,7 +93,14 @@ export const BookingPageEvent: React.FC | null = () => {
         (item.schedule_type === ScheduleType.Single &&
           item.day === moment(selectedDate).format('YYYY-MM-DD'))
       )
-        return <p key={item.id}>{`${item.start_time} - ${item.end_time}`}</p>;
+        return (
+          <TimeSchedule
+            active={item.id === activeTimeSchedule}
+            id={item.id}
+            startTime={item.start_time}
+            onClick={setActiveTimeSchedule}
+          />
+        );
 
       return null;
     });
