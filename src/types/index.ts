@@ -46,3 +46,14 @@ export interface IEventSchedules {
   createdAt: Date;
   updatedAt: Date;
 }
+
+export interface IEventScheduled {
+  id: number;
+  event_schedules_id: number;
+  name: string;
+  email: string;
+  comment: string;
+  date: Date;
+  createdAt: Date;
+  updatedAt: Date;
+}

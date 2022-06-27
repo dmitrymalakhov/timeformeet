@@ -9,7 +9,7 @@ import {
   TimeScheduleButton,
   ConfirmButton
 } from './styled';
-import { useGetEventSchedules } from '../../hooks';
+import { useGetEventSchedules, useGetEventScheduled } from '../../hooks';
 import { ScheduleType } from '../../types';
 
 type TimeScheduleProps = {
@@ -47,6 +47,7 @@ export const BookingPageEvent: React.FC | null = () => {
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [activeTimeSchedule, setActiveTimeSchedule] = useState<number>(-1);
   const eventSchedules = useGetEventSchedules(); // TODO: need add eventTypeId to request
+  const eventScheduled = useGetEventScheduled();
 
   const schedules =
     eventSchedules.data && eventTypeId
@@ -56,7 +57,7 @@ export const BookingPageEvent: React.FC | null = () => {
       : [];
 
   const renderCell = (date: Moment) => {
-    const setAvailableSelect = !!schedules.find((item) => {
+    const availableSchedulesOnCurrentDay = schedules.filter((item) => {
       if (item.schedule_type === ScheduleType.Everyday)
         return item.day === date.format('dddd').toLowerCase();
 
@@ -65,6 +66,20 @@ export const BookingPageEvent: React.FC | null = () => {
 
       return false;
     });
+
+    const eventScheduledOnCurrentDay = availableSchedulesOnCurrentDay.filter(
+      (item) => {
+        return eventScheduled.data?.find(
+          (scheduledEvent) =>
+            moment(scheduledEvent.date).format('YYYY-MM-DD') ===
+              date.format('YYYY-MM-DD') &&
+            scheduledEvent.event_schedules_id === item.id
+        );
+      }
+    );
+
+    const setAvailableSelect =
+      availableSchedulesOnCurrentDay.length - eventScheduledOnCurrentDay.length;
 
     if (setAvailableSelect) {
       const handleClickSelect = () => {
@@ -86,21 +101,37 @@ export const BookingPageEvent: React.FC | null = () => {
   };
 
   const renderEventSchedules = () => {
-    return schedules.map((item) => {
+    return schedules.map((scheduleEvent) => {
+      const selectedDayFormated = moment(selectedDate)
+        .format('dddd')
+        .toLowerCase();
+
+      const selectedDateFormated = moment(selectedDate).format('YYYY-MM-DD');
+
+      const bookedEvent = eventScheduled.data?.find(
+        (scheduledEvent) =>
+          moment(scheduledEvent.date).format('YYYY-MM-DD') ===
+            selectedDateFormated &&
+          scheduledEvent.event_schedules_id === scheduleEvent.id
+      );
+
       if (
-        (item.schedule_type === ScheduleType.Everyday &&
-          item.day === moment(selectedDate).format('dddd').toLowerCase()) ||
-        (item.schedule_type === ScheduleType.Single &&
-          item.day === moment(selectedDate).format('YYYY-MM-DD'))
-      )
+        (!bookedEvent &&
+          scheduleEvent.schedule_type === ScheduleType.Everyday &&
+          scheduleEvent.day === selectedDayFormated) ||
+        (scheduleEvent.schedule_type === ScheduleType.Single &&
+          scheduleEvent.day === selectedDateFormated)
+      ) {
         return (
           <TimeSchedule
-            active={item.id === activeTimeSchedule}
-            id={item.id}
-            startTime={item.start_time}
+            key={scheduleEvent.id}
+            active={scheduleEvent.id === activeTimeSchedule}
+            id={scheduleEvent.id}
+            startTime={scheduleEvent.start_time}
             onClick={setActiveTimeSchedule}
           />
         );
+      }
 
       return null;
     });

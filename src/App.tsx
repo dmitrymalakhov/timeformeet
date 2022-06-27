@@ -6,9 +6,11 @@ import {
   SignIn,
   SignUp,
   Calendar,
-  BookingPage,
   Root,
-  BookingPageEvent
+  BookingPageRoot,
+  BookingPage,
+  BookingPageEvent,
+  BookingPageEventScheduled
 } from './routes';
 
 import 'antd/dist/antd.css';
@@ -38,11 +40,14 @@ export const App = () => (
       <Route path="/signin" element={<SignIn />} />
       <Route path="/signup" element={<SignUp />} />
 
-      <Route path="/booking-page/:eventTypeId/" element={<BookingPage />} />
-      <Route
-        path="/booking-page/:eventTypeId/:link"
-        element={<BookingPageEvent />}
-      />
+      <Route path="/booking-page/" element={<BookingPageRoot />}>
+        <Route path=":eventTypeId/" element={<BookingPage />} />
+        <Route path=":eventTypeId/:link" element={<BookingPageEvent />} />
+        <Route
+          path=":eventTypeId/:link/:eventScheduledId"
+          element={<BookingPageEventScheduled />}
+        />
+      </Route>
 
       <Route path="/" element={<Root />}>
         <Route path="calendar" element={<Calendar />} />
