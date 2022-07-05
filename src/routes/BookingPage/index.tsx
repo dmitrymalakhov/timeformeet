@@ -2,8 +2,6 @@ import React from 'react';
 import { useGetEventTypes } from '../../hooks';
 
 import {
-  BookingPageWrapper,
-  BookingContainer,
   BookingListWrapper,
   EventLink,
   TitleContainer,
@@ -20,7 +18,10 @@ export const BookingPage: React.FC | null = () => {
     if (eventTypes.isLoading) return null;
 
     return eventTypes.data.map((item) => (
-      <EventLink key={item.id} href={`/booking-page/${item.id}/${item.link}`}>
+      <EventLink
+        key={item.id}
+        href={`/booking-page/${item.owner}/${item.id}/${item.link}`}
+      >
         <TitleContainer>
           <EventTypeMarker color={item.color} />
           <EventTypeHeaderTitle>{item.name}</EventTypeHeaderTitle>
@@ -32,10 +33,8 @@ export const BookingPage: React.FC | null = () => {
   };
 
   return (
-    <BookingPageWrapper>
-      <BookingContainer>
-        <BookingListWrapper>{renderItems()}</BookingListWrapper>
-      </BookingContainer>
-    </BookingPageWrapper>
+    <>
+      <BookingListWrapper>{renderItems()}</BookingListWrapper>
+    </>
   );
 };

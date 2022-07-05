@@ -30,7 +30,7 @@ export const BookingPageEventScheduled = () => {
       .then((res: IEventScheduled) => {
         if (res.hash)
           window.location.replace(
-            `/booking-page/${eventType?.link}/invitees/${res.hash}`
+            `/booking-page/invitees/${eventType?.link}/${res.hash}`
           );
       });
   };

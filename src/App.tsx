@@ -41,17 +41,17 @@ export const App = () => (
       <Route path="/signin" element={<SignIn />} />
       <Route path="/signup" element={<SignUp />} />
 
-      <Route path="/booking-page/:eventTypeId/" element={<BookingPageRoot />}>
-        <Route path="/" element={<BookingPage />} />
-        <Route path=":link" element={<BookingPageEvent />} />
+      <Route path="/booking-page/" element={<BookingPageRoot />}>
+        <Route path=":eventTypeId" element={<BookingPage />} />
         <Route
-          path=":link/:eventSchedulesId"
+          path=":owner/:eventTypeId/:link"
+          element={<BookingPageEvent />}
+        />
+        <Route
+          path=":owner/:eventTypeId/:link/:eventSchedulesId"
           element={<BookingPageEventScheduled />}
         />
-        <Route
-          path=":link/invitees/:hashInvite"
-          element={<BookingPageInvite />}
-        />
+        <Route path="invitees/:link/:hash" element={<BookingPageInvite />} />
       </Route>
 
       <Route path="/" element={<Root />}>

@@ -49,7 +49,7 @@ export interface IEventSchedules {
 
 export interface IEventScheduled {
   id: number;
-  event_schedules_id: number;
+  eventSchedulesId: number;
   name: string;
   email: string;
   comment: string;

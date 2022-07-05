@@ -18,6 +18,7 @@ type TimeScheduleProps = {
   endTime?: Date;
   active: boolean;
   eventTypeId?: string;
+  owner?: string;
   link?: string;
   date: string;
   onClick: (id: number) => void;
@@ -31,13 +32,14 @@ const TimeSchedule = ({
   active,
   link,
   eventTypeId,
+  owner,
   date
 }: TimeScheduleProps) => {
   const handleClick = () => {
     onClick(id);
   };
 
-  const url = `/booking-page/${eventTypeId}/${link}/${id}?date=${date}`;
+  const url = `/booking-page/${owner}/${eventTypeId}/${link}/${id}?date=${date}`;
 
   return (
     <Box overflow="hidden" display="flex">
@@ -53,7 +55,9 @@ const TimeSchedule = ({
 };
 
 export const BookingPageEvent: React.FC | null = () => {
-  const { eventTypeId, link } = useParams<Record<string, string | undefined>>();
+  const { eventTypeId, link, owner } = useParams<
+    Record<string, string | undefined>
+  >();
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [activeTimeSchedule, setActiveTimeSchedule] = useState<number>(-1);
   const eventSchedules = useGetEventSchedules(); // TODO: need add eventTypeId to request
@@ -142,6 +146,7 @@ export const BookingPageEvent: React.FC | null = () => {
             onClick={setActiveTimeSchedule}
             eventTypeId={eventTypeId}
             link={link}
+            owner={owner}
             date={selectedDateFormated}
           />
         );
