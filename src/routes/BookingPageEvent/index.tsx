@@ -17,6 +17,9 @@ type TimeScheduleProps = {
   startTime: Date;
   endTime?: Date;
   active: boolean;
+  eventTypeId?: string;
+  link?: string;
+  date: string;
   onClick: (id: number) => void;
 };
 
@@ -25,11 +28,16 @@ const TimeSchedule = ({
   startTime,
   endTime,
   onClick,
-  active
+  active,
+  link,
+  eventTypeId,
+  date
 }: TimeScheduleProps) => {
   const handleClick = () => {
     onClick(id);
   };
+
+  const url = `/booking-page/${eventTypeId}/${link}/${id}?date=${date}`;
 
   return (
     <Box overflow="hidden" display="flex">
@@ -37,7 +45,9 @@ const TimeSchedule = ({
         <div>{`${moment(startTime, 'hh:mm:ss').format('HH:mm')}`}</div>
       </TimeScheduleButton>
 
-      <ConfirmButton active={active}>Confirm</ConfirmButton>
+      <ConfirmButton href={url} active={active}>
+        Confirm
+      </ConfirmButton>
     </Box>
   );
 };
@@ -57,7 +67,7 @@ export const BookingPageEvent: React.FC | null = () => {
       : [];
 
   const renderCell = (date: Moment) => {
-    const availableSchedulesOnCurrentDay = schedules.filter((item) => {
+    const availableSchedulesForCurrentDay = schedules.filter((item) => {
       if (item.schedule_type === ScheduleType.Everyday)
         return item.day === date.format('dddd').toLowerCase();
 
@@ -67,7 +77,7 @@ export const BookingPageEvent: React.FC | null = () => {
       return false;
     });
 
-    const eventScheduledOnCurrentDay = availableSchedulesOnCurrentDay.filter(
+    const scheduledEventsForCurrentDay = availableSchedulesForCurrentDay.filter(
       (item) => {
         return eventScheduled.data?.find(
           (scheduledEvent) =>
@@ -79,7 +89,8 @@ export const BookingPageEvent: React.FC | null = () => {
     );
 
     const setAvailableSelect =
-      availableSchedulesOnCurrentDay.length - eventScheduledOnCurrentDay.length;
+      availableSchedulesForCurrentDay.length -
+      scheduledEventsForCurrentDay.length;
 
     if (setAvailableSelect) {
       const handleClickSelect = () => {
@@ -129,6 +140,9 @@ export const BookingPageEvent: React.FC | null = () => {
             id={scheduleEvent.id}
             startTime={scheduleEvent.start_time}
             onClick={setActiveTimeSchedule}
+            eventTypeId={eventTypeId}
+            link={link}
+            date={selectedDateFormated}
           />
         );
       }
@@ -138,9 +152,13 @@ export const BookingPageEvent: React.FC | null = () => {
   };
 
   return (
-    <div>
-      <Calendar fullscreen={false} dateFullCellRender={renderCell} />
-      {renderEventSchedules()}
-    </div>
+    <Box display="flex">
+      <Box width="75%">
+        <Calendar fullscreen={false} dateFullCellRender={renderCell} />
+      </Box>
+      <Box width="25%" p="10px">
+        {renderEventSchedules()}
+      </Box>
+    </Box>
   );
 };

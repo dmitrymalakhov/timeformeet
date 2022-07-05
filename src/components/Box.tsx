@@ -4,21 +4,25 @@ import {
   space,
   color,
   layout,
+  flexbox,
   LayoutProps,
   SpaceProps,
   ColorProps,
-  TypographyProps
+  TypographyProps,
+  FlexProps
 } from 'styled-system';
 
 interface BoxProps
   extends SpaceProps,
     ColorProps,
     TypographyProps,
-    LayoutProps {}
+    LayoutProps,
+    FlexProps {}
 
 export const Box = styled.div<BoxProps>`
   ${typography};
   ${space};
   ${color};
   ${layout}
+  ${flexbox}
 `;

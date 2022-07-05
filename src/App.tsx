@@ -10,7 +10,8 @@ import {
   BookingPageRoot,
   BookingPage,
   BookingPageEvent,
-  BookingPageEventScheduled
+  BookingPageEventScheduled,
+  BookingPageInvite
 } from './routes';
 
 import 'antd/dist/antd.css';
@@ -40,12 +41,16 @@ export const App = () => (
       <Route path="/signin" element={<SignIn />} />
       <Route path="/signup" element={<SignUp />} />
 
-      <Route path="/booking-page/" element={<BookingPageRoot />}>
-        <Route path=":eventTypeId/" element={<BookingPage />} />
-        <Route path=":eventTypeId/:link" element={<BookingPageEvent />} />
+      <Route path="/booking-page/:eventTypeId/" element={<BookingPageRoot />}>
+        <Route path="/" element={<BookingPage />} />
+        <Route path=":link" element={<BookingPageEvent />} />
         <Route
-          path=":eventTypeId/:link/:eventScheduledId"
+          path=":link/:eventSchedulesId"
           element={<BookingPageEventScheduled />}
+        />
+        <Route
+          path=":link/invitees/:hashInvite"
+          element={<BookingPageInvite />}
         />
       </Route>
 

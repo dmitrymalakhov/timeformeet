@@ -1,13 +1,12 @@
-import { useState, useEffect } from "react";
-import { Form, Input, Button, Checkbox, Alert } from "antd";
-import { useQueryClient, QueryObserver } from "react-query";
-import { Navigate } from "react-router-dom";
-import styled from "styled-components";
-import { UserOutlined, LockOutlined } from "@ant-design/icons";
+import { useState } from 'react';
+import { Form, Input, Button, Checkbox, Alert } from 'antd';
+import { Navigate } from 'react-router-dom';
+import styled from 'styled-components';
+import { UserOutlined, LockOutlined } from '@ant-design/icons';
 
-import { baseAPILink } from "../../constants";
-import { apiRequest } from "../../utils/request";
-import { SignInWrapper } from "./styled";
+import { baseAPILink } from '../../constants';
+import { apiRequest } from '../../utils/request';
+import { SignInWrapper } from './styled';
 
 const LoginButtonWrapper = styled(Form.Item)`
   display: flex;
@@ -32,28 +31,26 @@ export const SignIn = () => {
   const [loggedIn, setLoggedIn] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
-  const queryClient = useQueryClient();
-
   const handleCloseError = () => {
     setError(null);
   };
 
   const handleTestRequest = () => {
-    apiRequest("/test");
+    apiRequest('/test');
   };
 
   const handleFinish = (values: any) => {
     fetch(`${baseAPILink}/signin`, {
-      method: "POST",
+      method: 'POST',
       body: JSON.stringify(values),
-      credentials: "include"
+      credentials: 'include'
     })
       .then((res) => res.json())
       .then((res: SignInResponce) => {
         if (res.message && res.statusCode && res.statusCode !== 200) {
           setError(res.message);
         } else if (res.accessToken) {
-          localStorage.setItem("token", res.accessToken);
+          localStorage.setItem('token', res.accessToken);
           setLoggedIn(!!res);
         }
       })
@@ -76,7 +73,7 @@ export const SignIn = () => {
             rules={[
               {
                 required: true,
-                message: "Please input your Login!"
+                message: 'Please input your Login!'
               }
             ]}
           >
@@ -90,7 +87,7 @@ export const SignIn = () => {
             rules={[
               {
                 required: true,
-                message: "Please input your Password!"
+                message: 'Please input your Password!'
               }
             ]}
           >

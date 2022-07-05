@@ -6,3 +6,4 @@ export { BookingPage } from './BookingPage';
 export { BookingPageEvent } from './BookingPageEvent';
 export { BookingPageRoot } from './BookingPageRoot';
 export { BookingPageEventScheduled } from './BookingPageEventScheduled';
+export { BookingPageInvite } from './BookingPageInvite';

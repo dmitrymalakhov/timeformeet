@@ -54,6 +54,7 @@ export interface IEventScheduled {
   email: string;
   comment: string;
   date: Date;
+  hash: string;
   createdAt: Date;
   updatedAt: Date;
 }

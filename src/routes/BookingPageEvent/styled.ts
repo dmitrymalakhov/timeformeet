@@ -1,4 +1,5 @@
 import styled, { css } from 'styled-components';
+import { Link } from 'react-router-dom';
 
 interface IDayAvailableForSelectProps {
   active: boolean;
@@ -80,7 +81,7 @@ export const TimeScheduleButton = styled.button<TimeScheduleButtonProps>`
   }
 `;
 
-export const ConfirmButton = styled.button<ConfirmButtonProps>`
+export const ConfirmButton = styled.a<ConfirmButtonProps>`
   transform: translateX(0);
   width: 48.5%;
   height: 52px;
@@ -99,6 +100,7 @@ export const ConfirmButton = styled.button<ConfirmButtonProps>`
   display: relative;
   border: none;
   cursor: pointer;
+  text-align: center;
 
   &:after {
     position: absolute;
@@ -115,4 +117,9 @@ export const ConfirmButton = styled.button<ConfirmButtonProps>`
       margin-right: 0;
       margin-left: 3%;
     `}
+`;
+
+export const EventSchedulesWrapper = styled.div`
+  width: 20%;
+  padding: 10px;
 `;
