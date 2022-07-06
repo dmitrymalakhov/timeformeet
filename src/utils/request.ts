@@ -1,5 +1,5 @@
-import { refreshToken } from "./authentication";
-import { baseAPILink } from "../constants";
+import { refreshToken } from './authentication';
+import { baseAPILink } from '../constants';
 
 type TOptions = {
   [key: string]: any;
@@ -8,15 +8,15 @@ type TOptions = {
 export const apiRequest = (url: string, options: TOptions = {}): any => {
   const newOptions: TOptions = options;
 
-  newOptions.credentials = "include";
+  newOptions.credentials = 'include';
 
   if (!newOptions.headers) {
     newOptions.headers = new Headers();
   }
 
   newOptions.headers.append(
-    "Authorization",
-    `Bearer ${localStorage.getItem("token")}`
+    'Authorization',
+    `Bearer ${localStorage.getItem('token')}`
   );
 
   const newUrl = `${baseAPILink}${url}`;

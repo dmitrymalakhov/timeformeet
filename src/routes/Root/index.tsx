@@ -8,12 +8,10 @@ export const Root: React.FC = () => {
 
   return (
     <div>
-      {data ? (
+      {data && (
         <Link to="/me">
           <Button>My Account</Button>
         </Link>
-      ) : (
-        <Link to="/signin">Sign in</Link>
       )}
       <div>
         <Outlet />
