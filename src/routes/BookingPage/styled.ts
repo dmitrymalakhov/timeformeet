@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { TEventTypeMarkerProps } from './types';
 
 export const BookingListWrapper = styled.div`
   display: flex;
@@ -27,17 +26,6 @@ export const TitleContainer = styled.div`
   align-items: center;
   height: 40px;
   margin-bottom: 20px;
-`;
-
-export const EventTypeMarker = styled.div<TEventTypeMarkerProps>`
-  background: ${(props) => props.color || '#b2b2b2'};
-  flex: 0 0 auto;
-  width: 30px;
-  height: 30px;
-  margin-right: 10px;
-  background-clip: padding-box;
-  border: solid 2px #fff;
-  border-radius: 50%;
 `;
 
 export const EventTypeHeaderTitle = styled.div`

@@ -35,10 +35,6 @@ export const SignIn = () => {
     setError(null);
   };
 
-  const handleTestRequest = () => {
-    apiRequest('/test');
-  };
-
   const handleFinish = (values: any) => {
     fetch(`${baseAPILink}/signin`, {
       method: 'POST',
@@ -126,9 +122,8 @@ export const SignIn = () => {
               onClose={handleCloseError}
             />
           )}
-          <Button onClick={handleTestRequest}>Test Request</Button>
         </Form>
-        {loggedIn && <Navigate replace to="/calendar" />}
+        {loggedIn && <Navigate replace to="/me" />}
       </SignInWrapper>
     </>
   );

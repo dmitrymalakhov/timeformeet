@@ -1,11 +1,11 @@
 import React from 'react';
 import { useGetEventTypes } from '../../hooks';
+import { TypeMarker } from '../../components';
 
 import {
   BookingListWrapper,
   EventLink,
   TitleContainer,
-  EventTypeMarker,
   EventTypeHeaderTitle,
   EventTypeArrow,
   EventTypeDescription
@@ -23,7 +23,7 @@ export const BookingPage: React.FC | null = () => {
         href={`/booking-page/${item.owner}/${item.id}/${item.link}`}
       >
         <TitleContainer>
-          <EventTypeMarker color={item.color} />
+          <TypeMarker color={item.color} />
           <EventTypeHeaderTitle>{item.name}</EventTypeHeaderTitle>
           <EventTypeArrow />
         </TitleContainer>

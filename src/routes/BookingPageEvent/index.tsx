@@ -127,7 +127,7 @@ export const BookingPageEvent: React.FC | null = () => {
         (scheduledEvent) =>
           moment(scheduledEvent.date).format('YYYY-MM-DD') ===
             selectedDateFormated &&
-          scheduledEvent.event_schedules_id === scheduleEvent.id
+          scheduledEvent.eventSchedulesId === scheduleEvent.id
       );
 
       if (

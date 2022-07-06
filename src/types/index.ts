@@ -58,3 +58,7 @@ export interface IEventScheduled {
   createdAt: Date;
   updatedAt: Date;
 }
+
+export type TMarkerProps = {
+  color?: string;
+};

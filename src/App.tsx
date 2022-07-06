@@ -5,7 +5,7 @@ import { ReactQueryDevtools } from 'react-query/devtools';
 import {
   SignIn,
   SignUp,
-  Calendar,
+  AccountEventTypes,
   Root,
   BookingPageRoot,
   BookingPage,
@@ -26,6 +26,11 @@ const GlobalStyle = createGlobalStyle`
     word-break: break-word;
     overflow-wrap: break-word;
     -webkit-font-smoothing: antialiased;
+  }
+
+  a {
+    text-decoration: none;
+    color: inherit;
   }
 
   a:-webkit-any-link {
@@ -54,9 +59,9 @@ export const App = () => (
         <Route path="invitees/:link/:hash" element={<BookingPageInvite />} />
       </Route>
 
-      <Route path="/" element={<Root />}>
-        <Route path="calendar" element={<Calendar />} />
-      </Route>
+      <Route path="/" element={<Root />} />
+
+      <Route path="/me" element={<AccountEventTypes />} />
     </Routes>
 
     <ReactQueryDevtools initialIsOpen={false} />

@@ -1,6 +1,5 @@
-import React from "react";
-import { useGetUser, useGetEventTypes } from "../../hooks";
-
+import React from 'react';
+import { useGetUser, useGetEventTypes } from '../../hooks';
 import {
   EventTypeCard,
   EventTypeCardCap,
@@ -11,12 +10,11 @@ import {
   Wrapper,
   EventTypeCardList,
   ListHeader
-} from "./styled";
+} from './styled';
 
-export const Calendar: React.FC | null = () => {
+export const AccountEventTypes: React.FC | null = () => {
   const user = useGetUser();
   const eventTypes = useGetEventTypes();
-  // const eventSchedules = useQuery("event-schedules", getEventSchedules);
 
   const renderCards = () => {
     if (!eventTypes.data) return null;
