@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import { TEventTypeCardCapProps } from "./types";
+import styled from 'styled-components';
+import { TEventTypeCardCapProps } from './types';
 
 export const Wrapper = styled.div`
   margin-top: 20px;
@@ -31,7 +31,7 @@ export const EventTypeCardCap = styled.div<TEventTypeCardCapProps>`
   margin-left: -1px;
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
-  background: ${(props) => props.color || "#b2b2b2"};
+  background: ${(props) => props.color || '#b2b2b2'};
 `;
 
 export const EventTypeCardBody = styled.div`
@@ -80,4 +80,13 @@ export const EventTypeCardList = styled.div`
   box-sizing: border-box;
 `;
 
-export const ListHeader = styled.div``;
+export const ListHeader = styled.div`
+  border-top: none;
+  border-bottom: 1px solid #dadada;
+  vertical-align: middle;
+  margin: 15px;
+  padding-bottom: 15px;
+  justify-content: space-between;
+  display: flex;
+  align-items: center;
+`;

@@ -5,6 +5,7 @@ import { ReactQueryDevtools } from 'react-query/devtools';
 import {
   SignIn,
   SignUp,
+  AccountRoot,
   AccountEventTypes,
   Root,
   BookingPageRoot,
@@ -45,6 +46,7 @@ export const App = () => (
     <Routes>
       <Route path="/signin" element={<SignIn />} />
       <Route path="/signup" element={<SignUp />} />
+      <Route path="/" element={<Root />} />
 
       <Route path="/booking-page/" element={<BookingPageRoot />}>
         <Route path=":eventTypeId" element={<BookingPage />} />
@@ -59,9 +61,9 @@ export const App = () => (
         <Route path="invitees/:link/:hash" element={<BookingPageInvite />} />
       </Route>
 
-      <Route path="/" element={<Root />} />
-
-      <Route path="/me" element={<AccountEventTypes />} />
+      <Route path="/account/" element={<AccountRoot />}>
+        <Route path="event_types" element={<AccountEventTypes />} />
+      </Route>
     </Routes>
 
     <ReactQueryDevtools initialIsOpen={false} />

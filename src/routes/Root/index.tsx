@@ -9,7 +9,7 @@ export const Root: React.FC = () => {
   return (
     <div>
       {data && (
-        <Link to="/me">
+        <Link to="/account/event_types">
           <Button>My Account</Button>
         </Link>
       )}

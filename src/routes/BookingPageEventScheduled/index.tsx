@@ -1,9 +1,32 @@
 import { useParams, useSearchParams } from 'react-router-dom';
+import styled from 'styled-components';
 import { Form, Input, Button } from 'antd';
 import { useGetEventTypes } from '../../hooks';
 import { apiRequest } from '../../utils/request';
 import { IEventScheduled } from '../../types';
 import { Box } from '../../components';
+
+const DetailsTitle = styled.div`
+  margin: 0;
+  font-weight: 700;
+  font-size: 28px;
+  line-height: 32px;
+`;
+
+const DetailsSubtitle = styled.div`
+  margin-bottom: 12px;
+  color: rgba(26, 26, 26, 0.6);
+  font-weight: 700;
+`;
+
+const SidePanel = styled.div`
+  min-width: 300px;
+  border-right: 1px solid var(--text-color-level3, rgba(26, 26, 26, 0.1));
+  transition: all 0.22s ease-out;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  padding: 25px 30px;
+`;
 
 export const BookingPageEventScheduled = () => {
   const params = useParams<Record<string, string | undefined>>();
@@ -37,18 +60,24 @@ export const BookingPageEventScheduled = () => {
 
   return (
     <>
-      <Box pt={25} pb={25}>
+      <SidePanel>
         <Box pl={30}>
-          <Box fontSize={28}>{eventType?.name}</Box>
-          <Box>{`${eventType?.duration} min`}</Box>
-          <Box>{eventType?.location}</Box>
-          <Box>{eventType?.description}</Box>
-          <Box>{searchParams.get('date')}</Box>
+          <Box mb="24px">
+            <DetailsTitle>{eventType?.name}</DetailsTitle>
+          </Box>
+          <DetailsSubtitle>{`${eventType?.duration} min`}</DetailsSubtitle>
+          <DetailsSubtitle>{eventType?.location}</DetailsSubtitle>
+          <DetailsSubtitle>{eventType?.description}</DetailsSubtitle>
+          <DetailsSubtitle>{searchParams.get('date')}</DetailsSubtitle>
         </Box>
-      </Box>
-      <Box p="25px 15px">
-        <Form name="normal_name" onFinish={handleFinish}>
+      </SidePanel>
+      <Box p="25px 30px 0 30px" maxWidth="400px" flexGrow="1">
+        <Box mb="10px" fontSize="20px">
+          Enter Details
+        </Box>
+        <Form layout="vertical" onFinish={handleFinish}>
           <Form.Item
+            label="Name"
             name="name"
             rules={[
               {
@@ -56,9 +85,10 @@ export const BookingPageEventScheduled = () => {
               }
             ]}
           >
-            <Input placeholder="Name" />
+            <Input size="large" />
           </Form.Item>
           <Form.Item
+            label="Email"
             name="email"
             rules={[
               {
@@ -67,14 +97,10 @@ export const BookingPageEventScheduled = () => {
               }
             ]}
           >
-            <Input placeholder="Email" />
+            <Input size="large" />
           </Form.Item>
-          <Form.Item name="comment">
-            <Input.TextArea
-              showCount
-              maxLength={100}
-              placeholder="Description"
-            />
+          <Form.Item name="Comment" label="comment">
+            <Input.TextArea size="large" showCount maxLength={100} />
           </Form.Item>
           <Form.Item>
             <Button type="primary" htmlType="submit">

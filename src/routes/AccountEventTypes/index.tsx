@@ -1,5 +1,8 @@
 import React from 'react';
+import styled from 'styled-components';
 import { useGetUser, useGetEventTypes } from '../../hooks';
+import { Button } from '../../components';
+
 import {
   EventTypeCard,
   EventTypeCardCap,
@@ -12,6 +15,11 @@ import {
   ListHeader
 } from './styled';
 
+const BookingLink = styled.a`
+  color: #0069ff;
+  text-decoration: none;
+  cursor: pointer;
+`;
 export const AccountEventTypes: React.FC | null = () => {
   const user = useGetUser();
   const eventTypes = useGetEventTypes();
@@ -27,7 +35,7 @@ export const AccountEventTypes: React.FC | null = () => {
           <EventTypeCardExtra>{item.duration} min</EventTypeCardExtra>
           <EventTypeBookingLink
             target="_blank"
-            href={`/booking-page/${item.id}/${item.link}`}
+            href={`/booking-page/${user.data.id}/${item.id}/${item.link}`}
           >
             View booking page
           </EventTypeBookingLink>
@@ -42,16 +50,19 @@ export const AccountEventTypes: React.FC | null = () => {
     const url = `${window.origin}/booking-page/${user.data.id}`;
 
     return (
-      <a href={url} target="_blank" rel="noopener noreferrer">
+      <BookingLink href={url} target="_blank" rel="noopener noreferrer">
         {url}
-      </a>
+      </BookingLink>
     );
   };
 
   return (
     <div>
       <Wrapper>
-        <ListHeader>{renderBookingLink()}</ListHeader>
+        <ListHeader>
+          {renderBookingLink()}
+          <Button transparent>New Event Type</Button>
+        </ListHeader>
         <EventTypeCardList>{renderCards()}</EventTypeCardList>
       </Wrapper>
     </div>
