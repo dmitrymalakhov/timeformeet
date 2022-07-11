@@ -1,15 +1,6 @@
 import styled from 'styled-components';
 import { TEventTypeCardCapProps } from './types';
 
-export const Wrapper = styled.div`
-  margin-top: 20px;
-  margin-right: auto;
-  margin-left: auto;
-  padding-right: 20px;
-  padding-left: 20px;
-  max-width: 1020px;
-`;
-
 export const EventTypeCard = styled.div`
   position: relative;
   display: flex;
@@ -19,9 +10,13 @@ export const EventTypeCard = styled.div`
   border: 1px solid rgba(26, 26, 26, 0.1);
   border-radius: 4px;
   box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.1);
-  margin: 12px;
   width: ${100 / 3}%;
   box-sizing: border-box;
+  margin-top: 20px;
+
+  &:nth-child(even) {
+    margin-left: 12px;
+  }
 `;
 
 export const EventTypeCardCap = styled.div<TEventTypeCardCapProps>`
@@ -84,7 +79,6 @@ export const ListHeader = styled.div`
   border-top: none;
   border-bottom: 1px solid #dadada;
   vertical-align: middle;
-  margin: 15px;
   padding-bottom: 15px;
   justify-content: space-between;
   display: flex;

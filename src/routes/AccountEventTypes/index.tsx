@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useGetUser, useGetEventTypes } from '../../hooks';
-import { Button } from '../../components';
+import { Button, Content } from '../../components';
 
 import {
   EventTypeCard,
@@ -10,7 +10,6 @@ import {
   EventTypeCardTitle,
   EventTypeCardExtra,
   EventTypeBookingLink,
-  Wrapper,
   EventTypeCardList,
   ListHeader
 } from './styled';
@@ -58,13 +57,13 @@ export const AccountEventTypes: React.FC | null = () => {
 
   return (
     <div>
-      <Wrapper>
+      <Content>
         <ListHeader>
           {renderBookingLink()}
           <Button transparent>New Event Type</Button>
         </ListHeader>
         <EventTypeCardList>{renderCards()}</EventTypeCardList>
-      </Wrapper>
+      </Content>
     </div>
   );
 };

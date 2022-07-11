@@ -8,3 +8,4 @@ export { BookingPageRoot } from './BookingPageRoot';
 export { BookingPageEventScheduled } from './BookingPageEventScheduled';
 export { BookingPageInvite } from './BookingPageInvite';
 export { AccountRoot } from './AccountRoot';
+export { AccountScheduledEvents } from './AccountScheduledEvents';

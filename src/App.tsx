@@ -7,6 +7,7 @@ import {
   SignUp,
   AccountRoot,
   AccountEventTypes,
+  AccountScheduledEvents,
   Root,
   BookingPageRoot,
   BookingPage,
@@ -27,6 +28,10 @@ const GlobalStyle = createGlobalStyle`
     word-break: break-word;
     overflow-wrap: break-word;
     -webkit-font-smoothing: antialiased;
+  }
+
+  ul {
+    list-style: none;
   }
 
   a {
@@ -63,6 +68,7 @@ export const App = () => (
 
       <Route path="/account/" element={<AccountRoot />}>
         <Route path="event_types" element={<AccountEventTypes />} />
+        <Route path="scheduled_events" element={<AccountScheduledEvents />} />
       </Route>
     </Routes>
 
