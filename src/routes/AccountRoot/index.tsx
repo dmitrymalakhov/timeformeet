@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import styled, { css } from 'styled-components';
 import { Outlet, Link, useLocation } from 'react-router-dom';
 import { Box, Content } from '../../components';
@@ -59,10 +59,6 @@ const LinkStyled = styled(Link)<LinkStyledProps>`
 
 export const AccountRoot: React.FC = () => {
   const location = useLocation();
-
-  useEffect(() => {
-    console.log(location);
-  }, [location]);
 
   return (
     <div>

@@ -10,12 +10,17 @@ export const EventTypeCard = styled.div`
   border: 1px solid rgba(26, 26, 26, 0.1);
   border-radius: 4px;
   box-shadow: 0 1px 6px 0 rgba(0, 0, 0, 0.1);
-  width: ${100 / 3}%;
   box-sizing: border-box;
-  margin-top: 20px;
+  margin: 20px 10px 0 10px;
+  width: 30%;
+  box-sizing: border-box;
 
-  &:nth-child(even) {
-    margin-left: 12px;
+  @media screen and (min-width: 767px) and (max-width: 1023px) {
+    width: 47%;
+  }
+
+  @media screen and (max-width: 767px) {
+    width: 100%;
   }
 `;
 
@@ -73,6 +78,7 @@ export const EventTypeCardList = styled.div`
   display: flex;
   flex-wrap: wrap;
   box-sizing: border-box;
+  justify-content: space-between;
 `;
 
 export const ListHeader = styled.div`

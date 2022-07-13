@@ -7,6 +7,8 @@ import {
   SignUp,
   AccountRoot,
   AccountEventTypes,
+  AccountEventTypesNew,
+  AccountEventTypesNewSolo,
   AccountScheduledEvents,
   Root,
   BookingPageRoot,
@@ -43,6 +45,7 @@ const GlobalStyle = createGlobalStyle`
     cursor: pointer;
   }
 `;
+
 const queryClient = new QueryClient();
 
 export const App = () => (
@@ -68,6 +71,12 @@ export const App = () => (
 
       <Route path="/account/" element={<AccountRoot />}>
         <Route path="event_types" element={<AccountEventTypes />} />
+        <Route path="event_types/new" element={<AccountEventTypesNew />} />
+        <Route
+          path="event_types/new/solo"
+          element={<AccountEventTypesNewSolo />}
+        />
+
         <Route path="scheduled_events" element={<AccountScheduledEvents />} />
       </Route>
     </Routes>

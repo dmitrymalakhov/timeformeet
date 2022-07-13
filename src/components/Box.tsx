@@ -5,6 +5,8 @@ import {
   color,
   layout,
   flexbox,
+  border,
+  BorderProps,
   LayoutProps,
   SpaceProps,
   ColorProps,
@@ -17,12 +19,14 @@ interface BoxProps
     ColorProps,
     TypographyProps,
     LayoutProps,
-    FlexProps {}
+    FlexProps,
+    BorderProps {}
 
 export const Box = styled.div<BoxProps>`
   ${typography};
   ${space};
   ${color};
   ${layout}
+  ${border}
   ${flexbox}
 `;

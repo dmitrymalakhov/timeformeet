@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 import { useGetUser, useGetEventTypes } from '../../hooks';
-import { Button, Content } from '../../components';
+import { Button, Content, Box } from '../../components';
 
 import {
   EventTypeCard,
@@ -19,6 +20,7 @@ const BookingLink = styled.a`
   text-decoration: none;
   cursor: pointer;
 `;
+
 export const AccountEventTypes: React.FC | null = () => {
   const user = useGetUser();
   const eventTypes = useGetEventTypes();
@@ -60,8 +62,11 @@ export const AccountEventTypes: React.FC | null = () => {
       <Content>
         <ListHeader>
           {renderBookingLink()}
-          <Button transparent>New Event Type</Button>
+          <Button transparent>
+            <Link to="/account/event_types/new">New Event Type</Link>
+          </Button>
         </ListHeader>
+
         <EventTypeCardList>{renderCards()}</EventTypeCardList>
       </Content>
     </div>
