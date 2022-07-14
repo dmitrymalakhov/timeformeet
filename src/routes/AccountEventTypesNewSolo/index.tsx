@@ -1,9 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Form, Input, Button, Radio } from 'antd';
+import { Form, Input, InputNumber, Button, Radio } from 'antd';
 import { IEventType } from '../../types';
 import { apiRequest } from '../../utils/request';
-import { Content, Box, TypeMarker } from '../../components';
+import { Content, Box } from '../../components';
 
 const NewEventTypeFormWrapper = styled.div`
   margin-bottom: 4px;
@@ -73,6 +73,9 @@ export const AccountEventTypesNewSolo: React.FC | null = () => {
             </Form.Item>
             <Form.Item label="Location" name="location">
               <Input size="large" />
+            </Form.Item>
+            <Form.Item label="Duration" name="duration">
+              <InputNumber size="large" /> min
             </Form.Item>
             <Form.Item label="Description/Instructions" name="description">
               <Input.TextArea size="large" showCount maxLength={100} />
