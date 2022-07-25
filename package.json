@@ -13,7 +13,7 @@
     "@types/react-dom": "18.0.6",
     "@types/styled-components": "5.1.24",
     "@types/styled-system": "5.1.15",
-    "antd": "4.19.4",
+    "antd": "4.21.7",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-query": "3.39.1",

@@ -20,7 +20,6 @@ const Tabs = styled.ul`
   display: flex;
   margin: 0;
   padding: 0;
-  overflow-x: scroll;
   font-size: 16px;
   height: 100%;
   -webkit-overflow-scrolling: touch;

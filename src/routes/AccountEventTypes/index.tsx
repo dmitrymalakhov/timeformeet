@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { Dropdown, Menu, Space } from 'antd';
 import { useGetUser, useGetEventTypes } from '../../hooks';
 import { Button, Content, Box } from '../../components';
 
@@ -15,34 +16,79 @@ import {
   ListHeader
 } from './styled';
 
+interface MenuItemProps {
+  id: number;
+  children: React.ReactNode;
+  onClick: () => void;
+}
+
 const BookingLink = styled.a`
   color: #0069ff;
   text-decoration: none;
   cursor: pointer;
 `;
 
+const СonfigurationMenu = styled.div`
+  position: absolute;
+  top: 10px;
+  right: 10px;
+`;
+
+const MenuItem = ({ id, onClick }: MenuItemProps) => {
+  const handleClick = () => {
+    console.log(id);
+  };
+
+  return <div onClick={handleClick}>Remove</div>;
+};
+
 export const AccountEventTypes: React.FC | null = () => {
   const user = useGetUser();
   const eventTypes = useGetEventTypes();
 
+  const handleClickRemoveItem = () => {};
   const renderCards = () => {
     if (!eventTypes.data) return null;
 
-    return eventTypes.data.map((item) => (
-      <EventTypeCard key={item.id}>
-        <EventTypeCardCap color={item.color}></EventTypeCardCap>
-        <EventTypeCardBody>
-          <EventTypeCardTitle>{item.name}</EventTypeCardTitle>
-          <EventTypeCardExtra>{item.duration} min</EventTypeCardExtra>
-          <EventTypeBookingLink
-            target="_blank"
-            href={`/booking-page/${user.data.id}/${item.id}/${item.link}`}
-          >
-            View booking page
-          </EventTypeBookingLink>
-        </EventTypeCardBody>
-      </EventTypeCard>
-    ));
+    return eventTypes.data.map((item) => {
+      const menu = (
+        <Menu
+          items={[
+            {
+              label: (
+                <MenuItem id={item.id} onClick={handleClickRemoveItem}>
+                  Remove
+                </MenuItem>
+              ),
+              key: '0'
+            }
+          ]}
+        />
+      );
+
+      return (
+        <EventTypeCard key={item.id}>
+          <EventTypeCardCap color={item.color}></EventTypeCardCap>
+          <EventTypeCardBody>
+            <СonfigurationMenu>
+              <Dropdown overlay={menu} trigger={['click']}>
+                <a onClick={(e) => e.preventDefault()}>
+                  <Space>⚙️</Space>
+                </a>
+              </Dropdown>
+            </СonfigurationMenu>
+            <EventTypeCardTitle>{item.name}</EventTypeCardTitle>
+            <EventTypeCardExtra>{item.duration} min</EventTypeCardExtra>
+            <EventTypeBookingLink
+              target="_blank"
+              href={`/booking-page/${user.data.id}/${item.id}/${item.link}`}
+            >
+              View booking page
+            </EventTypeBookingLink>
+          </EventTypeCardBody>
+        </EventTypeCard>
+      );
+    });
   };
 
   const renderBookingLink = () => {

@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Form, Input, InputNumber, Button, Radio } from 'antd';
+import { Form, Input, InputNumber, Button, Radio, DatePicker } from 'antd';
+
+import type { Moment } from 'moment';
 import { IEventType } from '../../types';
 import { apiRequest } from '../../utils/request';
 import { Content, Box } from '../../components';
@@ -42,11 +44,22 @@ const RadioGroup = styled(Radio.Group)`
   }
 `;
 
+interface IEventTypePayload extends IEventType {
+  date: [Moment, Moment];
+}
+
 export const AccountEventTypesNewSolo: React.FC | null = () => {
-  const handleFinish = (values: IEventType) => {
+  const [form] = Form.useForm();
+
+  const handleFinish = (values: IEventTypePayload) => {
+    const newValues = Object.assign({}, values);
+
+    newValues.start_date = newValues.date[0].format('YYYY-MM-DD');
+    newValues.end_date = newValues.date[1].format('YYYY-MM-DD');
+
     apiRequest('/events/types', {
       method: 'POST',
-      body: JSON.stringify(values)
+      body: JSON.stringify(newValues)
     })
       .then((res: Response) => res.json())
       .then((res: IEventType) => {
@@ -58,7 +71,7 @@ export const AccountEventTypesNewSolo: React.FC | null = () => {
     <Content>
       <NewEventTypeFormWrapper>
         <Box maxWidth="536px" p="32px 52px">
-          <Form layout="vertical" onFinish={handleFinish}>
+          <Form layout="vertical" onFinish={handleFinish} form={form}>
             <Form.Item
               label="Event name"
               name="name"
@@ -75,7 +88,10 @@ export const AccountEventTypesNewSolo: React.FC | null = () => {
               <Input size="large" />
             </Form.Item>
             <Form.Item label="Duration" name="duration">
-              <InputNumber size="large" /> min
+              <InputNumber size="large" />
+            </Form.Item>
+            <Form.Item label="Date" name="date">
+              <DatePicker.RangePicker size="large" />
             </Form.Item>
             <Form.Item label="Description/Instructions" name="description">
               <Input.TextArea size="large" showCount maxLength={100} />

@@ -6,8 +6,8 @@ export interface IUser {
 export interface IEventType {
   id: number;
   owner: number;
-  start_date: Date;
-  end_date: Date;
+  start_date: string;
+  end_date: string;
   duration: number;
   repeat: string;
   name: string;
