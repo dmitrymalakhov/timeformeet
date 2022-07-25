@@ -28,6 +28,10 @@ const BookingLink = styled.a`
   cursor: pointer;
 `;
 
+const SettingLink = styled.span`
+  cursor: pointer;
+`;
+
 const СonfigurationMenu = styled.div`
   position: absolute;
   top: 10px;
@@ -72,9 +76,13 @@ export const AccountEventTypes: React.FC | null = () => {
           <EventTypeCardBody>
             <СonfigurationMenu>
               <Dropdown overlay={menu} trigger={['click']}>
-                <a onClick={(e) => e.preventDefault()}>
-                  <Space>⚙️</Space>
-                </a>
+                <Space>
+                  <SettingLink>
+                    <span role="img" aria-label="setting">
+                      ⚙️
+                    </span>
+                  </SettingLink>
+                </Space>
               </Dropdown>
             </СonfigurationMenu>
             <EventTypeCardTitle>{item.name}</EventTypeCardTitle>
