@@ -1,7 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import { useQueryClient } from 'react-query';
 import { Dropdown, Menu, Space } from 'antd';
+import { apiRequest } from '../../utils/request';
 import { useGetUser, useGetEventTypes } from '../../hooks';
 import { Button, Content, Box } from '../../components';
 
@@ -19,7 +21,7 @@ import {
 interface MenuItemProps {
   id: number;
   children: React.ReactNode;
-  onClick: () => void;
+  onClick: (id: number) => void;
 }
 
 const BookingLink = styled.a`
@@ -40,7 +42,7 @@ const СonfigurationMenu = styled.div`
 
 const MenuItem = ({ id, onClick }: MenuItemProps) => {
   const handleClick = () => {
-    console.log(id);
+    onClick(id);
   };
 
   return <div onClick={handleClick}>Remove</div>;
@@ -50,7 +52,14 @@ export const AccountEventTypes: React.FC | null = () => {
   const user = useGetUser();
   const eventTypes = useGetEventTypes();
 
-  const handleClickRemoveItem = () => {};
+  const queryClient = useQueryClient();
+
+  const handleClickRemoveItem = (id: number) => {
+    apiRequest(`/events/types/${id}`, {
+      method: 'DELETE'
+    }).then(() => queryClient.invalidateQueries(['event-types']));
+  };
+
   const renderCards = () => {
     if (!eventTypes.data) return null;
 

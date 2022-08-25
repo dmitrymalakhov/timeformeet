@@ -123,7 +123,7 @@ export const SignIn = () => {
             />
           )}
         </Form>
-        {loggedIn && <Navigate replace to="/me" />}
+        {loggedIn && <Navigate replace to="/account/" />}
       </SignInWrapper>
     </>
   );
