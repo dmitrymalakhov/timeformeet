@@ -9,6 +9,7 @@ import {
   AccountEventTypes,
   AccountEventTypesNew,
   AccountEventTypesNewSolo,
+  AccountEventTypesEdit,
   AccountScheduledEvents,
   Root,
   BookingPageRoot,
@@ -75,6 +76,10 @@ export const App = () => (
         <Route
           path="event_types/new/solo"
           element={<AccountEventTypesNewSolo />}
+        />
+        <Route
+          path="event_types/:id/edit"
+          element={<AccountEventTypesEdit />}
         />
 
         <Route path="scheduled_events" element={<AccountScheduledEvents />} />

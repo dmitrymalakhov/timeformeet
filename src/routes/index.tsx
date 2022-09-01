@@ -11,3 +11,4 @@ export { AccountRoot } from './AccountRoot';
 export { AccountScheduledEvents } from './AccountScheduledEvents';
 export { AccountEventTypesNew } from './AccountEventTypesNew';
 export { AccountEventTypesNewSolo } from './AccountEventTypesNewSolo';
+export { AccountEventTypesEdit } from './AccountEventTypesEdit';

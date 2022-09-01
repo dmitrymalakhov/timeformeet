@@ -40,12 +40,12 @@ const СonfigurationMenu = styled.div`
   right: 10px;
 `;
 
-const MenuItem = ({ id, onClick }: MenuItemProps) => {
+const MenuItem = ({ id, onClick, children }: MenuItemProps) => {
   const handleClick = () => {
     onClick(id);
   };
 
-  return <div onClick={handleClick}>Remove</div>;
+  return <div onClick={handleClick}>{children}</div>;
 };
 
 export const AccountEventTypes: React.FC | null = () => {
@@ -69,11 +69,19 @@ export const AccountEventTypes: React.FC | null = () => {
           items={[
             {
               label: (
+                <Link to={`/account/event_types/${item.id}/edit`}>
+                  <MenuItem id={item.id}>Edit</MenuItem>
+                </Link>
+              ),
+              key: '0'
+            },
+            {
+              label: (
                 <MenuItem id={item.id} onClick={handleClickRemoveItem}>
                   Remove
                 </MenuItem>
               ),
-              key: '0'
+              key: '1'
             }
           ]}
         />
