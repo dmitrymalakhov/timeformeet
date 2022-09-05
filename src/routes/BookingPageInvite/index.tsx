@@ -32,7 +32,7 @@ const InviteHeader = styled.div`
   text-align: center;
 `;
 
-export const BookingPageInvite: React.FC | null = () => {
+export const BookingPageInvite: React.FC = () => {
   const params = useParams<Record<string, string | undefined>>();
   const [invite, setInvite] = useState<IInviteResponse | null>(null);
 

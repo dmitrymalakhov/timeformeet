@@ -54,7 +54,7 @@ const TimeSchedule = ({
   );
 };
 
-export const BookingPageEvent: React.FC | null = () => {
+export const BookingPageEvent: React.FC = () => {
   const { eventTypeId, link, owner } = useParams<
     Record<string, string | undefined>
   >();

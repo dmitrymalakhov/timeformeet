@@ -48,7 +48,7 @@ const MenuItem = ({ id, onClick, children }: MenuItemProps) => {
   return <div onClick={handleClick}>{children}</div>;
 };
 
-export const AccountEventTypes: React.FC | null = () => {
+export const AccountEventTypes: React.FC = () => {
   const user = useGetUser();
   const eventTypes = useGetEventTypes();
 

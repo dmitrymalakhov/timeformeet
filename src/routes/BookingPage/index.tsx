@@ -11,7 +11,7 @@ import {
   EventTypeDescription
 } from './styled';
 
-export const BookingPage: React.FC | null = () => {
+export const BookingPage: React.FC = () => {
   const eventTypes = useGetEventTypes();
 
   const renderItems = () => {

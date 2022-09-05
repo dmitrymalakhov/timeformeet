@@ -38,7 +38,7 @@ const AccountEventTypesEditItem = styled.div`
 
 const days = Object.values(Days);
 
-export const AccountEventTypesEdit = () => {
+export const AccountEventTypesEdit: React.FC = () => {
   const { eventTypeId } = useParams<Record<string, string | undefined>>();
   const eventSchedules = useGetEventSchedules();
 

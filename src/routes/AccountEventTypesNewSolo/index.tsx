@@ -48,7 +48,7 @@ interface IEventTypePayload extends IEventType {
   date: [Moment, Moment];
 }
 
-export const AccountEventTypesNewSolo: React.FC | null = () => {
+export const AccountEventTypesNewSolo: React.FC = () => {
   const [form] = Form.useForm();
 
   const handleFinish = (values: IEventTypePayload) => {
