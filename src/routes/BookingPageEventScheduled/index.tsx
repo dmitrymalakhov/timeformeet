@@ -28,7 +28,7 @@ const SidePanel = styled.div`
   padding: 25px 30px;
 `;
 
-export const BookingPageEventScheduled = () => {
+export const BookingPageEventScheduled: React.FC = () => {
   const params = useParams<Record<string, string | undefined>>();
   const [searchParams] = useSearchParams();
 

@@ -47,6 +47,12 @@ export interface IEventSchedules {
   updatedAt: Date;
 }
 
+export interface IEventSchedulesResponse {
+  data: IEventSchedules[] | undefined;
+  isLoading: boolean;
+  isError: boolean;
+}
+
 export interface IEventScheduled {
   id: number;
   eventSchedulesId: number;

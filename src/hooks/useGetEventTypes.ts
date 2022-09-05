@@ -3,7 +3,7 @@ import { IEventType } from "../types";
 import { getEventTypes } from "../api";
 
 export const useGetEventTypes = (): {
-  data: IEventType[];
+  data: IEventType[] | undefined;
   isLoading: boolean;
   isError: boolean;
 } => {

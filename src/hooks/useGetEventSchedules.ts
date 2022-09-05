@@ -1,12 +1,8 @@
 import { useQuery } from 'react-query';
-import { IEventSchedules } from '../types';
+import { IEventSchedules, IEventSchedulesResponse } from '../types';
 import { getEventSchedules } from '../api';
 
-export const useGetEventSchedules = (): {
-  data: IEventSchedules[] | undefined;
-  isLoading: boolean;
-  isError: boolean;
-} => {
+export const useGetEventSchedules = (): IEventSchedulesResponse => {
   const { data, isLoading, isError } = useQuery<IEventSchedules[]>(
     'event-schedules',
     getEventSchedules

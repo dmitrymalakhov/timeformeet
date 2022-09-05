@@ -12,7 +12,7 @@ const EventTypesItem = styled.div`
   padding: 30px 0;
 `;
 
-export const AccountEventTypesNew: React.FC | null = () => {
+export const AccountEventTypesNew: React.FC = () => {
   return (
     <Content>
       <EventTypesItem>
