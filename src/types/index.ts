@@ -21,7 +21,7 @@ export interface IEventType {
   updatedAt: Date;
 }
 
-enum Days {
+export enum Days {
   Monday = 'monday',
   Tuesday = 'tuesday',
   Wednesday = 'wednesday',

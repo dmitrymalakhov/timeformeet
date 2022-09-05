@@ -78,7 +78,7 @@ export const App = () => (
           element={<AccountEventTypesNewSolo />}
         />
         <Route
-          path="event_types/:id/edit"
+          path="event_types/:eventTypeId/edit"
           element={<AccountEventTypesEdit />}
         />
 
