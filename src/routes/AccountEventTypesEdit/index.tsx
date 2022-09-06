@@ -1,6 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
+import { Input } from 'antd';
+import moment from 'moment';
+import type { Moment } from 'moment';
 import { Button, Content, Box } from '../../components';
 import { useGetEventSchedules } from '../../hooks';
 import { getSchedulesBuEventTypeID } from '../../utils';
@@ -36,19 +39,45 @@ const AccountEventTypesEditItem = styled.div`
   border-top: 1px solid rgba(26, 26, 26, 0.1);
 `;
 
+const TimeContainer = styled.div`
+  display: flex;
+  padding-left: 10px;
+`;
+
 const days = Object.values(Days);
 
 export const AccountEventTypesEdit: React.FC = () => {
   const { eventTypeId } = useParams<Record<string, string | undefined>>();
   const eventSchedules = useGetEventSchedules();
 
-  const schedules = getSchedulesBuEventTypeID(eventSchedules, eventTypeId);
+  const schedules = eventTypeId
+    ? getSchedulesBuEventTypeID(eventSchedules, eventTypeId)
+    : [];
 
   const renderItems = () =>
     days.map((item) => {
+      const range = schedules.find((el) => el.day === item);
+
+      const renderRange = () => {
+        if (!range) return null;
+
+        return (
+          <TimeContainer>
+            <Input
+              value={moment(range.start_time, 'hh:mm:ss').format('HH:mm')}
+            />{' '}
+            <Box width="40px" textAlign="center">
+              -
+            </Box>
+            <Input value={moment(range.end_time, 'hh:mm:ss').format('HH:mm')} />
+          </TimeContainer>
+        );
+      };
+
       return (
         <AccountEventTypesEditItem>
           <span>{item.slice(0, 3).toUpperCase()}</span>
+          <span>{renderRange()}</span>
         </AccountEventTypesEditItem>
       );
     });
