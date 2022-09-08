@@ -28,7 +28,7 @@ const AccountEventTypesEditSection = styled.div`
 
 const AccountEventTypesEditItem = styled.div`
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   margin: 0 24px;
   padding: 20px 0;
 
@@ -46,6 +46,24 @@ const TimeContainer = styled.div`
 
 const days = Object.values(Days);
 
+interface TimeRangeProps {
+  id: number;
+  startTime: Date;
+  endTime: Date;
+}
+
+const TimeRange = ({ startTime, endTime }: TimeRangeProps) => {
+  return (
+    <TimeContainer>
+      <Input value={moment(startTime, 'hh:mm:ss').format('HH:mm')} />{' '}
+      <Box width="40px" textAlign="center">
+        -
+      </Box>
+      <Input value={moment(endTime, 'hh:mm:ss').format('HH:mm')} />
+    </TimeContainer>
+  );
+};
+
 export const AccountEventTypesEdit: React.FC = () => {
   const { eventTypeId } = useParams<Record<string, string | undefined>>();
   const eventSchedules = useGetEventSchedules();
@@ -62,15 +80,11 @@ export const AccountEventTypesEdit: React.FC = () => {
         if (!range) return null;
 
         return (
-          <TimeContainer>
-            <Input
-              value={moment(range.start_time, 'hh:mm:ss').format('HH:mm')}
-            />{' '}
-            <Box width="40px" textAlign="center">
-              -
-            </Box>
-            <Input value={moment(range.end_time, 'hh:mm:ss').format('HH:mm')} />
-          </TimeContainer>
+          <TimeRange
+            id={range.id}
+            startTime={range.start_time}
+            endTime={range.end_time}
+          />
         );
       };
 
