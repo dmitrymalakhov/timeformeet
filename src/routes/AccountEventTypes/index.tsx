@@ -2,7 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { useQueryClient } from 'react-query';
-import { Dropdown, Menu, Space } from 'antd';
+import { Dropdown, Menu, Space, Button as ButtonAnt } from 'antd';
+import { SettingOutlined } from '@ant-design/icons';
 import { apiRequest } from '../../utils/request';
 import { useGetUser, useGetEventTypes } from '../../hooks';
 import { Button, Content, Box } from '../../components';
@@ -95,9 +96,7 @@ export const AccountEventTypes: React.FC = () => {
               <Dropdown overlay={menu} trigger={['click']}>
                 <Space>
                   <SettingLink>
-                    <span role="img" aria-label="setting">
-                      ⚙️
-                    </span>
+                    <ButtonAnt shape="circle" icon={<SettingOutlined />} />
                   </SettingLink>
                 </Space>
               </Dropdown>

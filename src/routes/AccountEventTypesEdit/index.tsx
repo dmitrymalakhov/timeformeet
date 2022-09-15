@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
-import { Input } from 'antd';
+import { Input, Form, Button, TimePicker } from 'antd';
+import { SearchOutlined, PlusOutlined } from '@ant-design/icons';
 import moment from 'moment';
 import type { Moment } from 'moment';
-import { Button, Content, Box } from '../../components';
+import { Content, Box } from '../../components';
 import { useGetEventSchedules } from '../../hooks';
 import { getSchedulesBuEventTypeID } from '../../utils';
 import { IEventSchedules, Days } from '../../types';
@@ -28,7 +29,8 @@ const AccountEventTypesEditSection = styled.div`
 
 const AccountEventTypesEditItem = styled.div`
   display: flex;
-  align-items: center;
+  flex-direction: row;
+  align-items: baseline;
   margin: 0 24px;
   padding: 20px 0;
 
@@ -44,29 +46,66 @@ const TimeContainer = styled.div`
   padding-left: 10px;
 `;
 
-const days = Object.values(Days);
-
 interface TimeRangeProps {
   id: number;
+  day: string;
   startTime: Date;
   endTime: Date;
+  onChange: () => void;
 }
 
-const TimeRange = ({ startTime, endTime }: TimeRangeProps) => {
+interface IScheduleEventsForm {}
+
+const days = Object.values(Days);
+
+const TimeRange = ({ startTime, endTime, id, day }: TimeRangeProps) => {
+  const format = 'HH:mm';
+
+  const handleChange = (range: any) => {
+    console.log(range);
+  };
+
   return (
     <TimeContainer>
-      <Input value={moment(startTime, 'hh:mm:ss').format('HH:mm')} />{' '}
-      <Box width="40px" textAlign="center">
-        -
-      </Box>
-      <Input value={moment(endTime, 'hh:mm:ss').format('HH:mm')} />
+      <Form.Item name={`${day}_${id}`}>
+        <TimePicker.RangePicker
+          defaultValue={[moment(startTime, format), moment(endTime, format)]}
+          format={format}
+          onChange={handleChange}
+        />
+      </Form.Item>
     </TimeContainer>
+  );
+};
+
+const DayControlsWrapper = styled.div`
+  width: 70px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+interface DayControlProps {
+  item: Days;
+}
+
+const DayControl = ({ item }: DayControlProps) => {
+  return (
+    <DayControlsWrapper>
+      {item.slice(0, 3).toUpperCase()}{' '}
+      <Button shape="circle" icon={<PlusOutlined />} />
+    </DayControlsWrapper>
   );
 };
 
 export const AccountEventTypesEdit: React.FC = () => {
   const { eventTypeId } = useParams<Record<string, string | undefined>>();
   const eventSchedules = useGetEventSchedules();
+
+  const [currentSchedules, setCurrentSchedules] = useState<IEventSchedules[]>(
+    []
+  );
 
   const schedules = eventTypeId
     ? getSchedulesBuEventTypeID(eventSchedules, eventTypeId)
@@ -80,26 +119,41 @@ export const AccountEventTypesEdit: React.FC = () => {
         if (!range) return null;
 
         return (
-          <TimeRange
-            id={range.id}
-            startTime={range.start_time}
-            endTime={range.end_time}
-          />
+          <>
+            <TimeRange
+              id={range.id}
+              day={item}
+              startTime={range.start_time}
+              endTime={range.end_time}
+              onChange={() => {}}
+            />
+          </>
         );
       };
 
       return (
         <AccountEventTypesEditItem>
-          <span>{item.slice(0, 3).toUpperCase()}</span>
-          <span>{renderRange()}</span>
+          <DayControl item={item} />
+          <div>{renderRange()}</div>
         </AccountEventTypesEditItem>
       );
     });
 
+  const handleFinish = (values: IScheduleEventsForm) => {
+    console.log(values);
+  };
+
   return (
     <Content>
       <AccountEventTypesEditSection>
-        {renderItems()}
+        <Form layout="horizontal" onFinish={handleFinish}>
+          {renderItems()}
+          <Form.Item>
+            <Button type="primary" htmlType="submit">
+              Update
+            </Button>
+          </Form.Item>
+        </Form>
       </AccountEventTypesEditSection>
     </Content>
   );
