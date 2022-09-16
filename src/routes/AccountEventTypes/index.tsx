@@ -6,7 +6,7 @@ import { Dropdown, Menu, Space, Button as ButtonAnt } from 'antd';
 import { SettingOutlined } from '@ant-design/icons';
 import { apiRequest } from '../../utils/request';
 import { useGetUser, useGetEventTypes } from '../../hooks';
-import { Button, Content, Box } from '../../components';
+import { Button, Content } from '../../components';
 
 import {
   EventTypeCard,

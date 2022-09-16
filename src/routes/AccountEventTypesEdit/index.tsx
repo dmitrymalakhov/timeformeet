@@ -88,13 +88,18 @@ const DayControlsWrapper = styled.div`
 
 interface DayControlProps {
   item: Days;
+  onClick: (day: Days) => void;
 }
 
-const DayControl = ({ item }: DayControlProps) => {
+const DayControl = ({ item, onClick }: DayControlProps) => {
+  const handleClick = () => {
+    onClick(item);
+  };
+
   return (
     <DayControlsWrapper>
       {item.slice(0, 3).toUpperCase()}{' '}
-      <Button shape="circle" icon={<PlusOutlined />} />
+      <Button shape="circle" icon={<PlusOutlined />} onClick={handleClick} />
     </DayControlsWrapper>
   );
 };
@@ -107,18 +112,24 @@ export const AccountEventTypesEdit: React.FC = () => {
     []
   );
 
+  useEffect(() => {
+    console.log('data fetching done');
+  }, [eventSchedules]);
+
   const schedules = eventTypeId
     ? getSchedulesBuEventTypeID(eventSchedules, eventTypeId)
     : [];
 
   const renderItems = () =>
     days.map((item) => {
-      const range = schedules.find((el) => el.day === item);
+      const ranges = schedules
+        .concat(currentSchedules)
+        .filter((el) => el.day === item);
 
       const renderRange = () => {
-        if (!range) return null;
+        if (!ranges) return null;
 
-        return (
+        return ranges.map((range) => (
           <>
             <TimeRange
               id={range.id}
@@ -128,12 +139,31 @@ export const AccountEventTypesEdit: React.FC = () => {
               onChange={() => {}}
             />
           </>
-        );
+        ));
+      };
+
+      const handleClick = (day: Days) => {
+        const newCurrentSchedules = currentSchedules.slice();
+
+        if (eventTypeId) {
+          newCurrentSchedules.push({
+            id: 0,
+            event_type_id: parseInt(eventTypeId, 10),
+            day: day,
+            start_time: new Date(),
+            end_time: new Date(),
+            schedule_type: 'repeat'
+          });
+
+          setCurrentSchedules(newCurrentSchedules);
+        }
+
+        console.log(newCurrentSchedules);
       };
 
       return (
         <AccountEventTypesEditItem>
-          <DayControl item={item} />
+          <DayControl item={item} onClick={handleClick} />
           <div>{renderRange()}</div>
         </AccountEventTypesEditItem>
       );

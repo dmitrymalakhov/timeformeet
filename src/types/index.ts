@@ -43,8 +43,8 @@ export interface IEventSchedules {
   start_time: Date;
   end_time: Date;
   schedule_type: string;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 export interface IEventSchedulesResponse {
