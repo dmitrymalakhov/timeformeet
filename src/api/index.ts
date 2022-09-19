@@ -7,7 +7,7 @@ export const getUser = () =>
 export const getEventTypes = () =>
   apiRequest('/events/types').then((res: Response) => res.json());
 
-export const getEventSchedules = (): IEventSchedules[] =>
+export const getEventSchedules = (): Promise<IEventSchedules[]> =>
   apiRequest(`/events/schedules`).then((res: Response) => res.json());
 
 export const getEventScheduleById = (id: number): IEventSchedules =>

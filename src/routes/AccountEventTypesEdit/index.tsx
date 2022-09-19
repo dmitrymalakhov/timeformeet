@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
-import { Input, Form, Button, TimePicker } from 'antd';
-import { SearchOutlined, PlusOutlined } from '@ant-design/icons';
+import { Form, Button, TimePicker } from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
 import moment from 'moment';
+import { RangeValue } from 'rc-picker/lib/interface';
 import type { Moment } from 'moment';
 import { Content, Box } from '../../components';
-import { useGetEventSchedules } from '../../hooks';
-import { getSchedulesBuEventTypeID } from '../../utils';
+import { getEventSchedules } from '../../api';
+import { getSchedulesByEventTypeID, getRandomArbitrary } from '../../utils';
 import { IEventSchedules, Days } from '../../types';
 
 const AccountEventTypesEditSection = styled.div`
@@ -51,32 +52,11 @@ interface TimeRangeProps {
   day: string;
   startTime: Date;
   endTime: Date;
-  onChange: () => void;
+  onChange: (id: number, values: RangeValue<moment.Moment>) => void;
 }
 
-interface IScheduleEventsForm {}
-
 const days = Object.values(Days);
-
-const TimeRange = ({ startTime, endTime, id, day }: TimeRangeProps) => {
-  const format = 'HH:mm';
-
-  const handleChange = (range: any) => {
-    console.log(range);
-  };
-
-  return (
-    <TimeContainer>
-      <Form.Item name={`${day}_${id}`}>
-        <TimePicker.RangePicker
-          defaultValue={[moment(startTime, format), moment(endTime, format)]}
-          format={format}
-          onChange={handleChange}
-        />
-      </Form.Item>
-    </TimeContainer>
-  );
-};
+const format = 'HH:mm';
 
 const DayControlsWrapper = styled.div`
   width: 70px;
@@ -104,27 +84,60 @@ const DayControl = ({ item, onClick }: DayControlProps) => {
   );
 };
 
+const TimeRange = ({ id, startTime, endTime, onChange }: TimeRangeProps) => {
+  const handleChange = (values: RangeValue<moment.Moment>) => {
+    onChange(id, values);
+  };
+
+  return (
+    <TimeContainer>
+      <TimePicker.RangePicker
+        defaultValue={[moment(startTime, format), moment(endTime, format)]}
+        format={format}
+        onChange={handleChange}
+      />
+    </TimeContainer>
+  );
+};
+
+const ids = Array.from({ length: 1000 }, (x, index) => index + 1);
+
 export const AccountEventTypesEdit: React.FC = () => {
   const { eventTypeId } = useParams<Record<string, string | undefined>>();
-  const eventSchedules = useGetEventSchedules();
-
   const [currentSchedules, setCurrentSchedules] = useState<IEventSchedules[]>(
     []
   );
 
   useEffect(() => {
-    console.log('data fetching done');
-  }, [eventSchedules]);
+    getEventSchedules().then((res) =>
+      setCurrentSchedules(
+        eventTypeId ? getSchedulesByEventTypeID(res, eventTypeId) : []
+      )
+    );
+  }, [eventTypeId]);
 
-  const schedules = eventTypeId
-    ? getSchedulesBuEventTypeID(eventSchedules, eventTypeId)
-    : [];
+  const renderItems = () => {
+    const handleChangeTimeRange = (
+      id: number,
+      values: RangeValue<moment.Moment>
+    ) => {
+      if (!values) return;
 
-  const renderItems = () =>
-    days.map((item) => {
-      const ranges = schedules
-        .concat(currentSchedules)
-        .filter((el) => el.day === item);
+      const objIndex = currentSchedules.findIndex((obj) => obj.id === id);
+
+      const newCurrentSchedules = currentSchedules.slice();
+
+      newCurrentSchedules[objIndex] = {
+        ...newCurrentSchedules[objIndex],
+        start_time: moment(values[0], format).toDate(),
+        end_time: moment(values[1], format).toDate()
+      };
+
+      setCurrentSchedules(newCurrentSchedules);
+    };
+
+    return days.map((item) => {
+      const ranges = currentSchedules.filter((el) => el.day === item);
 
       const renderRange = () => {
         if (!ranges) return null;
@@ -132,11 +145,12 @@ export const AccountEventTypesEdit: React.FC = () => {
         return ranges.map((range) => (
           <>
             <TimeRange
+              key={range.id}
               id={range.id}
               day={item}
               startTime={range.start_time}
               endTime={range.end_time}
-              onChange={() => {}}
+              onChange={handleChangeTimeRange}
             />
           </>
         ));
@@ -146,8 +160,10 @@ export const AccountEventTypesEdit: React.FC = () => {
         const newCurrentSchedules = currentSchedules.slice();
 
         if (eventTypeId) {
+          const newId = ids.shift();
+
           newCurrentSchedules.push({
-            id: 0,
+            id: (newId && -1 * newId) || 0,
             event_type_id: parseInt(eventTypeId, 10),
             day: day,
             start_time: new Date(),
@@ -157,8 +173,6 @@ export const AccountEventTypesEdit: React.FC = () => {
 
           setCurrentSchedules(newCurrentSchedules);
         }
-
-        console.log(newCurrentSchedules);
       };
 
       return (
@@ -168,9 +182,10 @@ export const AccountEventTypesEdit: React.FC = () => {
         </AccountEventTypesEditItem>
       );
     });
+  };
 
-  const handleFinish = (values: IScheduleEventsForm) => {
-    console.log(values);
+  const handleFinish = () => {
+    console.log(currentSchedules);
   };
 
   return (
