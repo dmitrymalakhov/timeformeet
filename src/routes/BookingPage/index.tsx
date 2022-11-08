@@ -17,7 +17,7 @@ export const BookingPage: React.FC = () => {
   const renderItems = () => {
     if (eventTypes.isLoading) return null;
 
-    return eventTypes.data.map((item) => (
+    return eventTypes.data?.map((item) => (
       <EventLink
         key={item.id}
         href={`/booking-page/${item.owner}/${item.id}/${item.link}`}

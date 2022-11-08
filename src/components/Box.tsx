@@ -11,6 +11,7 @@ import {
   SpaceProps,
   ColorProps,
   TypographyProps,
+  FlexGrowProps,
   FlexProps
 } from 'styled-system';
 
@@ -20,6 +21,7 @@ interface BoxProps
     TypographyProps,
     LayoutProps,
     FlexProps,
+    FlexGrowProps,
     BorderProps {}
 
 export const Box = styled.div<BoxProps>`
