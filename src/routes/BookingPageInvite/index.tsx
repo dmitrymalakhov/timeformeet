@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import moment from 'moment';
 import { apiRequest } from '../../utils/request';
 import { Box, TypeMarker } from '../../components';
 import { IEventScheduled, IEventSchedules, IEventType } from '../../types';
@@ -53,9 +52,11 @@ export const BookingPageInvite: React.FC = () => {
           <span>{invite?.eventType.name}</span>
         </Box>
         <Box color="gray">
-          {invite?.eventScheduled.date}{' '}
-          {invite?.eventScheduled.eventSchedules.start_time} -{' '}
-          {invite?.eventScheduled.eventSchedules.end_time}
+          <>
+            {invite?.eventScheduled.date}{' '}
+            {invite?.eventScheduled.eventSchedules.start_time} -{' '}
+            {invite?.eventScheduled.eventSchedules.end_time}
+          </>
         </Box>
         <Box color="gray">{invite?.eventType.location}</Box>
       </Box>

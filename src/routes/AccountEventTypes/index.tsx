@@ -22,7 +22,7 @@ import {
 interface MenuItemProps {
   id: number;
   children: React.ReactNode;
-  onClick: (id: number) => void;
+  onClick?: (id: number) => void;
 }
 
 const BookingLink = styled.a`
@@ -43,7 +43,7 @@ const СonfigurationMenu = styled.div`
 
 const MenuItem = ({ id, onClick, children }: MenuItemProps) => {
   const handleClick = () => {
-    onClick(id);
+    onClick && onClick(id);
   };
 
   return <div onClick={handleClick}>{children}</div>;
