@@ -193,11 +193,13 @@ export const AccountEventTypesEdit: React.FC = () => {
       <AccountEventTypesEditSection>
         <Form layout="horizontal" onFinish={handleFinish}>
           {renderItems()}
-          <Form.Item>
-            <Button type="primary" htmlType="submit">
-              Update
-            </Button>
-          </Form.Item>
+          <AccountEventTypesEditItem>
+            <Form.Item>
+              <Button type="primary" htmlType="submit">
+                Update
+              </Button>
+            </Form.Item>
+          </AccountEventTypesEditItem>
         </Form>
       </AccountEventTypesEditSection>
     </Content>

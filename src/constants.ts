@@ -1,1 +1,1 @@
-export const baseAPILink = 'https://bkdhjd-8080.preview.csb.app';
+export const baseAPILink = 'https://6v7osj-8080.preview.csb.app';
