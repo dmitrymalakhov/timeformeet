@@ -28,9 +28,9 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
+    "test": "jest",
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -50,5 +50,11 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@babel/core": "^7.22.9",
+    "@babel/preset-env": "^7.22.9",
+    "babel-jest": "^29.6.2",
+    "ts-jest": "^29.1.1"
   }
 }
