@@ -18,7 +18,6 @@ export const refreshToken = (): Promise<RefreshTokenResponse> =>
       ) {
         window.location.replace('/signin');
       }
-
       return res.json();
     })
     .then((res: RefreshTokenResponse) => {
